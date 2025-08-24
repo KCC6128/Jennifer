@@ -340,6 +340,17 @@
 
 <script>
 (function(){
+  // 讓 .js 前綴動畫可用
+  document.documentElement.classList.add('js');
+
+  // ★ 首屏關鍵圖（優先載入）：優先找 .hero 圖，再退而求其次找第一張卡片圖
+  const firstAboveFold = document.querySelector('.hero img, .grid .card img, .cards .card img');
+  if (firstAboveFold) {
+    firstAboveFold.setAttribute('loading','eager');
+    firstAboveFold.setAttribute('fetchpriority','high');
+    firstAboveFold.setAttribute('decoding','async');
+  }
+
   // === 手機漢堡選單開合 ===
   const burger = document.getElementById('burger');
   const mobile = document.getElementById('mobile');
@@ -348,11 +359,9 @@
       const open = mobile.style.display === 'block';
       mobile.style.display = open ? 'none' : 'block';
       burger.setAttribute('aria-expanded', String(!open));
-      // 開單層選單時鎖捲動，避免底層滑動
       document.body.style.overflow = open ? '' : 'hidden';
     };
     burger.addEventListener('click', toggle);
-    // 點選單任一連結就關閉
     mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       mobile.style.display = 'none';
       burger.setAttribute('aria-expanded','false');
@@ -360,7 +369,7 @@
     }));
   }
 
-  // === 導覽列「亮燈」：依目前頁面加上 .active ===
+  // === 導覽列「亮燈」 ===
   const currentPage = (location.pathname.split('/').pop() || 'index.html');
   document.querySelectorAll('.links a, .mobile a').forEach(a => {
     const href = a.getAttribute('href') || '';
@@ -368,62 +377,19 @@
     if (page === currentPage) a.classList.add('active');
   });
 
-  // === 作品頁專用：卡片進場動畫 + 自動微放大 + 分類捲動/點擊高亮 ===
-  if (currentPage === 'works.html') {
-    const cards = document.querySelectorAll('.card');
-
-    // 卡片進場（.card -> .in）
-    const cardIO = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
-    cards.forEach(c => cardIO.observe(c));
-
-    // 行動裝置：點卡片切換 .reveal（顯示右下角 meta）
-    cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
-
-    // 行動裝置滑到該卡片時自動微放大（加上 .peek）
-    const zoomIO = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('peek');
-        else e.target.classList.remove('peek');
-      });
-    }, { threshold: 0.6 });
-    cards.forEach(c => zoomIO.observe(c));
-
-    // 分類捲動高亮（上方膠囊＋左側側欄同步）
-    const sections = [...document.querySelectorAll('section[id]')];
-    const cats = document.querySelectorAll('.category-nav .cat, .side-nav .cat');
-    const setActiveById = (id) => {
-      cats.forEach(c => c.classList.toggle('active-cat', c.getAttribute('href') === '#' + id));
-    };
-    const spy = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) setActiveById(e.target.id); });
-    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
-    sections.forEach(s => spy.observe(s));
-
-    // ★ 新增：點分類就立即高亮，不用等滾動命中
-    cats.forEach(cat => {
-      cat.addEventListener('click', () => {
-        const href = cat.getAttribute('href') || '';
-        if (href.startsWith('#')) setActiveById(href.slice(1));
-      });
-    });
-    // ★ 新增：網址 hash 改變（或直接帶 # 進頁）也同步高亮
-    const updateFromHash = () => {
-      if (location.hash) setActiveById(location.hash.replace('#',''));
-    };
-    window.addEventListener('hashchange', updateFromHash);
-    updateFromHash();
-
-    // 滑到最底部時，直接亮最後一個分類
-    window.addEventListener('scroll', () => {
-      const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      if (nearBottom && sections.length) setActiveById(sections[sections.length - 1].id);
-    });
+  // （可選）若有 .card 就做進場淡入
+  const cards = document.querySelectorAll('.card');
+  if (cards.length) {
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, {rootMargin:'0px 0px -10% 0px', threshold:0.1});
+    cards.forEach(c => io.observe(c));
   }
 
-  // === 圖片延後載入（若標籤沒設 loading="lazy"，這裡補上） ===
-  document.querySelectorAll('img:not([loading])').forEach(img => img.loading = 'lazy');
+  // ★ 其餘圖片改為 lazy（跳過 .hero）
+  document.querySelectorAll('img:not([loading])').forEach(img => {
+    if (!img.closest('.hero')) img.loading = 'lazy';
+  });
 })();
 </script>
 
