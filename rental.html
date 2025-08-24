@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>服裝租借 — Jennifer Photography</title>
+  <meta name="description" content="婚紗、禮服與拍攝服飾租借服務，含尺寸建議與搭配諮詢，支援到府自取或拍攝現場交付。">
+  <meta property="og:title" content="服裝租借 — Jennifer Photography" />
+  <meta property="og:description" content="婚紗、禮服與拍攝服飾租借服務，含尺寸建議與搭配諮詢。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://example.com/rental.html" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1520975940461-0f3753c8e8df?q=80&w=1200&auto=format&fit=crop" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>📷</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0f1115; --panel:#12151b; --muted:#9aa3b2; --text:#e6e8ec; --brand:#e6c499; --brand-2:#ffd3a3; --ring: rgba(230,196,153,.35); --border: #232735; --shadow: 0 10px 30px rgba(0,0,0,.35); }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(1200px 800px at 80% -10%, rgba(230,196,153,.09), transparent 60%), radial-gradient(1000px 600px at -10% 30%, rgba(149,114,252,.08), transparent 60%), var(--bg); color:var(--text);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, 'PingFang TC', 'Microsoft JhengHei', sans-serif;}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);background:linear-gradient(to bottom, rgba(15,17,21,.9), rgba(15,17,21,.55));border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 20px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.5px}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(45deg,var(--brand),var(--brand-2)); box-shadow:0 0 0 4px var(--ring)}
+    .links{display:flex;gap:26px;align-items:center}
+    .links a{opacity:.85}.links a:hover{opacity:1}
+    .cta{padding:10px 16px;border:1px solid var(--border);border-radius:999px;background:linear-gradient(180deg,#171a22,#12151b); box-shadow:var(--shadow)}
+    .burger{display:none}
+
+    /* Active 樣式（一致） */
+    .active{opacity:1 !important; text-decoration:underline; text-underline-offset:6px}
+
+    .hero{max-width:1200px;margin:0 auto;padding:80px 20px 50px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+    .title{font-family:"Playfair Display", serif; font-weight:700; font-size:clamp(36px,5.6vw,56px); line-height:1.05; margin:0 0 12px; }
+    .lead{color:#c9ced8; font-size:18px; line-height:1.7}
+    .badge{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:#151923; margin-right:8px}
+    section{max-width:1200px;margin:0 auto;padding:60px 20px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .card{position:relative;border:1px solid var(--border);background:linear-gradient(180deg,#131720,#11151c);border-radius:14px;overflow:hidden}
+    .card .meta{position:absolute;inset:auto 10px 10px 10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .chip{font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(12,14,18,.55);backdrop-filter:blur(6px);border:1px solid var(--border)}
+    .g3{grid-column:span 4} .g4{grid-column:span 8}
+    .price{font-weight:800;font-size:20px;background:linear-gradient(120deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    ul.clean{list-style:none;padding:0;margin:10px 0 0;color:#c9ced8} ul.clean li{margin:8px 0}
+    .panel{border:1px solid var(--border); background:linear-gradient(180deg,#131720,#11151c); border-radius:14px; padding:18px}
+    footer{border-top:1px solid var(--border); padding:24px 20px; color:#9aa3b2; text-align:center}
+		/* Hero 置中（本頁覆蓋） */
+	.hero{
+	  grid-template-columns: 1fr;    /* 由兩欄改為單欄 */
+	  justify-items: center;         /* 區塊內水平置中 */
+	  text-align: center;            /* 文字置中 */
+	}
+	.hero-cta{                       /* 按鈕群組置中 */
+	  justify-content: center;
+	}
+	.title{
+	  margin: 0 auto 12px;           /* 標題本身也置中 */
+	}
+
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(6,1fr)}
+      .g3{grid-column:span 6} .g4{grid-column:span 6}
+      .cards{grid-template-columns:1fr}
+      .links{display:none}
+      .burger{display:block; cursor:pointer}
+      .mobile{display:none; position:absolute; top:56px; right:20px; background:#0f1219; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:var(--shadow)}
+      .mobile a{display:block; padding:10px 12px}
+    }
+
+	.nav { padding-top: max(14px, env(safe-area-inset-top)); }
+	section[id] { scroll-margin-top: 90px; }
+	@media (max-width:980px){ section[id]{ scroll-margin-top: 110px; } }
+	button, .btn, .links a { min-height: 44px; }
+
+	/* 1) 觸控高度：不要套到所有 .links a */
+	button, .btn, .links .cta, .mobile a { min-height: 44px; }
+
+	/* 2) 導覽列連結用 inline-flex + 行高 1，避免文字基線造成視覺偏移 */
+	.links a{
+	  display: inline-flex;
+	  align-items: center;
+	  line-height: 1;
+	}
+
+	/* 3) 讓一般連結也有一點垂直內距，和 .cta 高度更接近 */
+	.links a:not(.cta){ padding: 10px 0; }
+
+	/* 4) .cta 維持原本的膠囊內距 */
+	.links .cta{ padding: 10px 16px; }
+	
+	/* 只有 JS 啟動才做進場淡入，避免圖片「不見」 */
+	.js .card { opacity: 0; transform: translateY(12px); will-change: transform, opacity; }
+	.js .card.in { opacity: 1; transform: translateY(0); }
+
+	/* 手機/平板：滑到卡片就微放大 */
+	@media (hover: none) {
+	  .card img { transition: transform .35s ease; }
+	  .card.peek img { transform: scale(1.03); }
+	}
+
+	/* 動效無障礙（可保留你原本的 reduce 也行） */
+	@media (prefers-reduced-motion: reduce) {
+	  .card { opacity: 1 !important; transform: none !important; }
+	}
+
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<header class="nav">
+  <div class="nav-inner">
+    <!-- 左側品牌 -->
+    <a href="index.html#top" class="brand">
+      <span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span>
+    </a>
+
+    <!-- 手機版漢堡選單按鈕：放在品牌後、桌機選單前 -->
+    <button id="burger" class="burger" aria-label="開啟選單" aria-expanded="false">☰</button>
+
+    <!-- 桌機版選單 -->
+    <nav class="links">
+      <a href="index.html#top">首頁</a>
+      <a href="works.html">作品</a>
+      <a href="services.html">拍攝方案</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="https://lin.ee/X8jPiQU" class="cta">預約</a>
+    </nav>
+
+    <!-- 手機版下拉選單容器 -->
+    <div class="mobile" id="mobile">
+      <a href="index.html#top">首頁</a>
+      <a href="works.html">作品</a>
+      <a href="services.html">拍攝方案</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="https://lin.ee/X8jPiQU">預約</a>
+    </div>
+  </div>
+</header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1 class="title">服裝租借服務</h1>
+      <div class="hero-cta" style="margin-top:22px">
+        <a class="btn primary" href="https://lin.ee/X8jPiQU">預約諮詢</a>
+        <a class="btn" href="#catalog">瀏覽款式</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog -->
+  <section id="catalog">
+    <div class="section-head">
+      <div>
+        <h2>款式一覽</h2>
+      </div>
+    </div>
+
+    <div class="grid">
+      <figure class="card g3">
+        <img src="img/rental/水手服.jpg" alt="水手服">
+        <figcaption class="meta"><span class="chip">水手服</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/制服.jpg" alt="制服">
+        <figcaption class="meta"><span class="chip">制服</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/浴衣A全套.jpg" alt="浴衣A全套">
+        <figcaption class="meta"><span class="chip">浴衣A全套</span><span class="chip">500$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/和服A全套.jpg" alt="和服A全套">
+        <figcaption class="meta"><span class="chip">和服A全套</span><span class="chip">800$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/粉色芭蕾洋裝.jpg" alt="粉色芭蕾洋裝">
+        <figcaption class="meta"><span class="chip">粉色芭蕾洋裝</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/高領連身裙.jpg" alt="高領連身裙">
+        <figcaption class="meta"><span class="chip">高領連身裙</span><span class="chip">200$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/彩色球球洋裝.jpg" alt="彩色球球洋裝">
+        <figcaption class="meta"><span class="chip">彩色球球洋裝</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/輕婚紗A.jpg" alt="輕婚紗A">
+        <figcaption class="meta"><span class="chip">輕婚紗A</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/輕婚紗B.jpg" alt="輕婚紗B">
+        <figcaption class="meta"><span class="chip">輕婚紗B</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/輕婚紗C.jpg" alt="輕婚紗C">
+        <figcaption class="meta"><span class="chip">輕婚紗C</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+      <figure class="card g3">
+        <img src="img/rental/輕婚紗D.jpg" alt="輕婚紗D">
+        <figcaption class="meta"><span class="chip">輕婚紗D</span><span class="chip">300$/天</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Notes -->
+  <section>
+    <div class="section-head"><h2>尺寸與租借規範</h2></div>
+    <div class="panel">
+      <p class="muted"><strong>尺寸建議：</strong> 提供S-XL（部分服裝可調節大小），如有租借需求請私訊官方LINE。</p>
+      <p class="muted"><strong>押金與賠償：</strong> 押金1000$，歸還後退還，如有不可修復之損壞，將沒收押金。</p>
+      <p class="muted"><strong>租借方式：</strong> 需自行取件，不提供外送服務。</p>
+	  <p class="muted"><strong>租借流程：</strong> 確認款式及租借天數➡️支付押金及租金➡️歸還服裝➡️退還押金。</p>
+    </div>
+  </section>
+
+  <footer>© <span id="y"></span> Jennifer • All rights reserved.</footer>
+
+<script>
+(function(){
+  // 標記 JS 已啟動，才啟用 .js 前綴的淡入動畫
+  document.documentElement.classList.add('js');
+
+  // === 手機漢堡選單開合 ===
+  const burger = document.getElementById('burger');
+  const mobile = document.getElementById('mobile');
+  if (burger && mobile) {
+    const toggle = () => {
+      const open = mobile.style.display === 'block';
+      mobile.style.display = open ? 'none' : 'block';
+      burger.setAttribute('aria-expanded', String(!open));
+      document.body.style.overflow = open ? '' : 'hidden';
+    };
+    burger.addEventListener('click', toggle);
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobile.style.display = 'none';
+      burger.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }));
+  }
+
+  // === 導覽列「亮燈」 ===
+  const currentPage = (location.pathname.split('/').pop() || 'index.html');
+  document.querySelectorAll('.links a, .mobile a').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    const page = (href.split('#')[0] || 'index.html');
+    if (page === currentPage) a.classList.add('active');
+  });
+
+  // === 卡片進場 + 手機滑到微放大 + 點擊 reveal（works & rental 共用） ===
+  if (currentPage === 'works.html' || currentPage === 'rental.html') {
+    const cards = document.querySelectorAll('.card');
+
+    // 進場淡入（.js .card/.card.in 搭配）
+    const cardIO = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    cards.forEach(c => cardIO.observe(c));
+
+    // 手機：滑到卡片就加 .peek（圖片微放大）
+    const zoomIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('peek');
+        else e.target.classList.remove('peek');
+      });
+    }, { threshold: 0.6 });
+    cards.forEach(c => zoomIO.observe(c));
+
+    // 點一下切換 .reveal（行動版顯示右下角 meta）
+    cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
+  }
+
+  // === 作品頁專屬：分類捲動/點擊/hash 高亮 ===
+  if (currentPage === 'works.html') {
+    const sections = [...document.querySelectorAll('section[id]')];
+    const cats = document.querySelectorAll('.category-nav .cat, .side-nav .cat');
+    const setActiveById = (id) => {
+      cats.forEach(c => c.classList.toggle('active-cat', c.getAttribute('href') === '#' + id));
+    };
+
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) setActiveById(e.target.id); });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(s => spy.observe(s));
+
+    // 點分類立即高亮
+    cats.forEach(cat => {
+      cat.addEventListener('click', () => {
+        const href = cat.getAttribute('href') || '';
+        if (href.startsWith('#')) setActiveById(href.slice(1));
+      });
+    });
+
+    // URL hash 改變也同步高亮（含直接帶錨點進頁）
+    const updateFromHash = () => { if (location.hash) setActiveById(location.hash.slice(1)); };
+    window.addEventListener('hashchange', updateFromHash);
+    updateFromHash();
+
+    // 滑到底 -> 亮最後一項
+    window.addEventListener('scroll', () => {
+      const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (nearBottom && sections.length) setActiveById(sections[sections.length - 1].id);
+    });
+  }
+
+  // === 圖片 lazy（保底） ===
+  document.querySelectorAll('img:not([loading])').forEach(img => img.loading = 'lazy');
+})();
+</script>
+
+
+</body>
+</html>

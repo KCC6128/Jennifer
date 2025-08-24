@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jennifer — Photography</title>
+  <meta name="description" content="個人攝影作品集｜人像、旅拍、婚紗與商業攝影。預約拍攝，讓你的故事被好好看見。">
+  <meta name="keywords" content="攝影師, 人像攝影, 婚紗, 旅拍, 商業攝影, 攝影作品集">
+  <meta property="og:title" content="Jennifer — Photography" />
+  <meta property="og:description" content="人像・旅拍・婚紗｜預約拍攝，讓你的故事被好好看見。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://example.com" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1200&auto=format&fit=crop" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>📷</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  
+<style>
+  /* ========= 基本變數 & Reset ========= */
+  :root{
+    --bg:#0f1115; --panel:#12151b; --muted:#9aa3b2; --text:#e6e8ec;
+    --brand:#e6c499; --brand-2:#ffd3a3; --ring:rgba(230,196,153,.35);
+    --border:#232735; --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  *{ box-sizing:border-box }
+  html{ scroll-behavior:smooth }
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 800px at 80% -10%, rgba(230,196,153,.09), transparent 60%),
+      radial-gradient(1000px 600px at -10% 30%, rgba(149,114,252,.08), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,'PingFang TC','Microsoft JhengHei',sans-serif;
+  }
+  a{ color:inherit; text-decoration:none }
+  img{ max-width:100%; display:block }
+
+  /* ========= 導覽列 ========= */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter:saturate(180%) blur(10px);
+    background:linear-gradient(to bottom, rgba(15,17,21,.9), rgba(15,17,21,.55));
+    border-bottom:1px solid var(--border);
+    /* iOS 瀏海安全區 */
+    padding-top:max(14px, env(safe-area-inset-top));
+  }
+  .nav-inner{
+    max-width:1200px; margin:0 auto;
+    display:flex; gap:20px; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.5px }
+  .brand .dot{
+    width:10px; height:10px; border-radius:999px;
+    background:linear-gradient(45deg,var(--brand),var(--brand-2));
+    box-shadow:0 0 0 4px var(--ring);
+  }
+  .links{ display:flex; gap:26px; align-items:center }
+  .links a{ opacity:.85 }
+  .links a:hover{ opacity:1 }
+  .links a{
+    /* 導覽連結垂直置中，避免基線造成偏移 */
+    display:inline-flex; align-items:center; line-height:1;
+  }
+  .links a:not(.cta){ padding:10px 0 }        /* 一般連結微內距 */
+  .cta{
+    padding:10px 16px; border:1px solid var(--border);
+    border-radius:999px; background:linear-gradient(180deg,#171a22,#12151b);
+    box-shadow:var(--shadow);
+  }
+  .burger{ display:none }
+  .active{ opacity:1 !important; text-decoration:underline; text-underline-offset:6px }
+
+  /* ========= Hero ========= */
+  .hero{
+    max-width:1200px; margin:0 auto;
+    padding:80px 20px 60px;
+    display:grid; grid-template-columns:1.15fr .85fr;
+    gap:40px; align-items:center;
+  }
+  .kicker{ color:var(--muted); letter-spacing:.15em; text-transform:uppercase; font-size:12px }
+  .title{
+    font-family:"Playfair Display",serif; font-weight:700;
+    font-size:clamp(38px, 6vw, 64px); line-height:1.05; margin:10px 0 18px;
+  }
+  .title .accent{
+    background:linear-gradient(120deg,var(--brand),var(--brand-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .lead{ color:#c9ced8; font-size:18px; line-height:1.7 }
+  .hero-cta{ display:flex; gap:14px; margin-top:26px; flex-wrap:wrap }
+  .btn{
+    padding:12px 18px; border-radius:12px; border:1px solid var(--border);
+    background:#151923; box-shadow:var(--shadow);
+  }
+  .btn.primary{ background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#1b1306; font-weight:700 }
+  .hero-media{ position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border) }
+  .hero-media img{ width:100%; height:auto; filter:saturate(1.05) contrast(1.05) }
+  .tag{
+    position:absolute; bottom:14px; left:14px;
+    background:rgba(0,0,0,.45); backdrop-filter:blur(6px);
+    padding:8px 12px; border-radius:10px; border:1px solid var(--border); font-size:12px;
+  }
+
+  /* ========= 區塊/排版 ========= */
+  section{ max-width:1200px; margin:0 auto; padding:70px 20px }
+  .section-head{ display:flex; align-items:end; justify-content:space-between; margin-bottom:26px }
+  h2{ font-family:"Playfair Display",serif; font-size:clamp(26px,3.4vw,38px); margin:0 }
+  p.muted{ color:var(--muted); margin:8px 0 0 }
+
+  .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:14px }
+  .card{
+    position:relative; border:1px solid var(--border);
+    background:linear-gradient(180deg,#131720,#11151c);
+    border-radius:14px; overflow:hidden;
+  }
+  .card .meta{ position:absolute; inset:auto 10px 10px 10px; display:flex; justify-content:space-between; align-items:center; gap:10px }
+  .chip{ font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(12,14,18,.55); backdrop-filter:blur(6px); border:1px solid var(--border) }
+  .g1{ grid-column:span 7 } .g2{ grid-column:span 5 } .g3{ grid-column:span 4 } .g4{ grid-column:span 8 }
+
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px }
+  .service{ padding:20px }
+  .service h3{ margin:0 0 8px; font-size:20px }
+  .price{
+    font-weight:800; font-size:22px;
+    background:linear-gradient(120deg,var(--brand),var(--brand-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  ul.clean{ list-style:none; padding:0; margin:12px 0 0; color:#c9ced8 }
+  ul.clean li{ margin:8px 0 }
+
+  .testi{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px }
+  .quote{ padding:18px; border-left:3px solid var(--brand); background:#141823; border-radius:12px }
+  .quote p{ margin:0; color:#d7dbe3 }
+  .who{ margin-top:10px; color:var(--muted); font-size:14px }
+
+  .about{ display:grid; grid-template-columns:1fr 1.2fr; gap:26px }
+  .about .me{ border:1px solid var(--border); border-radius:14px; overflow:hidden }
+  .about .me img{ height:100%; object-fit:cover }
+
+  .contact{ display:grid; grid-template-columns:1.1fr .9fr; gap:20px }
+  form{ display:grid; gap:12px }
+  label{ font-size:14px; color:var(--muted) }
+  input,textarea,select{
+    width:100%; padding:12px 14px; border-radius:10px;
+    border:1px solid var(--border); background:#12161f; color:var(--text); outline:none;
+  }
+  input:focus,textarea:focus,select:focus{ box-shadow:0 0 0 4px var(--ring) }
+  textarea{ min-height:130px; resize:vertical }
+
+  footer{ border-top:1px solid var(--border); padding:24px 20px; color:var(--muted); text-align:center }
+
+  /* ========= Lightbox ========= */
+  .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.85); display:none; align-items:center; justify-content:center; padding:20px; z-index:100 }
+  .lightbox.open{ display:flex }
+  .lightbox img{ max-width:min(1200px,90vw); max-height:80vh; border-radius:12px }
+  .lightbox .close{
+    position:absolute; top:18px; right:18px; font-size:28px; cursor:pointer;
+    background:rgba(0,0,0,.6); border:1px solid var(--border); border-radius:10px; padding:6px 10px;
+  }
+
+  /* ========= 行動裝置 ========= */
+  @media (max-width:980px){
+    .hero{ grid-template-columns:1fr; padding-top:60px }
+    .grid{ grid-template-columns:repeat(6,1fr) }
+    .g1{ grid-column:span 6 } .g2{ grid-column:span 6 } .g3{ grid-column:span 3 } .g4{ grid-column:span 6 }
+    .cards,.testi{ grid-template-columns:1fr }
+    .about,.contact{ grid-template-columns:1fr }
+    .links{ display:none }
+    .burger{ display:block; cursor:pointer }
+    .mobile{
+      display:none; position:absolute; top:56px; right:20px;
+      background:#0f1219; border:1px solid var(--border);
+      border-radius:12px; padding:10px; box-shadow:var(--shadow);
+    }
+    .mobile a{ display:block; padding:10px 12px }
+    /* 錨點偏移（行動版導覽較高時） */
+    section[id]{ scroll-margin-top:110px }
+  }
+
+  /* ========= 可用性/觸控 ========= */
+  section[id]{ scroll-margin-top:90px }       /* 桌機錨點不被導覽擋住 */
+  button, .btn, .links .cta, .mobile a{ min-height:44px }  /* 良好觸控高度 */
+
+  /* ========= 社群按鈕（品牌色） ========= */
+  .social-links{ display:flex; gap:12px; flex-wrap:wrap }
+  .about-social{ margin-top:12px } /* 放在 About 區塊時的上邊距 */
+
+  .social-icon{
+    width:44px; height:44px;
+    display:inline-flex; align-items:center; justify-content:center;
+    border-radius:12px;                           /* 圓角方形；要圓形可改 999px */
+    box-shadow:0 8px 24px rgba(0,0,0,.22);
+    transition:transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .social-icon:hover{ transform:translateY(-1px); box-shadow:0 12px 28px rgba(0,0,0,.28) }
+
+  /* 圖示統一白色 0px，使視覺更置中 */
+  .social-icon svg{
+    width:30px; height:30px; display:block; color:#fff;
+    position:relative; top:0px;
+  }
+  .social-icon svg *, .social-icon svg [fill]{ fill:#fff }
+  .social-icon svg [stroke]{ stroke:#fff }
+
+  /* Instagram：官方漸層（近似） */
+  .social-icon.instagram{
+    background:
+      radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    background-size:120% 120%; background-position:center;
+    overflow:hidden; /* 防止漸層超出圓角 */
+  }
+  /* LINE：官方綠 #06C755 */
+  .social-icon.line{ background:#06C755 }
+  /* 小紅書：官方紅 #FF2442 */
+  .social-icon.xhs{ background:#FF2442 }
+
+  /* 鍵盤可及性 */
+  .social-icon:focus-visible{ outline:2px solid rgba(255,255,255,.25); outline-offset:2px }
+
+  /* ========= 小螢幕字級微調 ========= */
+  @media (max-width:360px){
+    .lead{ font-size:16px }
+  }
+
+</style>
+
+</head>
+<body>
+
+<!-- Nav -->
+<header class="nav">
+  <div class="nav-inner">
+    <!-- 左側品牌 -->
+    <a href="index.html#top" class="brand">
+      <span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span>
+    </a>
+
+    <!-- 手機版漢堡選單按鈕：放在品牌後、桌機選單前 -->
+    <button id="burger" class="burger" aria-label="開啟選單" aria-expanded="false">☰</button>
+
+    <!-- 桌機版選單 -->
+    <nav class="links">
+      <a href="index.html#top">首頁</a>
+      <a href="works.html">作品</a>
+      <a href="services.html">拍攝方案</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="https://lin.ee/X8jPiQU" class="cta">預約</a>
+    </nav>
+
+    <!-- 手機版下拉選單容器 -->
+    <div class="mobile" id="mobile">
+      <a href="index.html#top">首頁</a>
+      <a href="works.html">作品</a>
+      <a href="services.html">拍攝方案</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="https://lin.ee/X8jPiQU">預約</a>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div>
+      <div class="kicker">Japanese style • Couple • Birthday • Studio shoot • wedding dress</div>
+      <h1 class="title">讓菸說話，<span class="accent">你的故事</span>值得抽一根。</h1>
+      <p class="lead">我專注於人像與情感敘事，用自然光與極簡風格捕捉最真實的一刻。提供個人形象、婚紗旅拍與商業攝影服務，從企劃到修圖一站到位。</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="https://lin.ee/X8jPiQU">立即預約</a>
+        <a class="btn" href="works.html">看作品</a>
+      </div>
+	  
+      <!-- 新增社群圖示 -->
+      <div class="social-links about-social">
+        <a href="https://www.instagram.com/imjenniferrr._?igsh=bjdzaWFpcmU1OHU0" target="_blank" aria-label="Instagram" class="social-icon instagram">
+          <!-- IG 圖示 -->
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram</title><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>
+        </a>
+        <a href="https://lin.ee/X8jPiQU" target="_blank" aria-label="LINE" class="social-icon line">
+          <!-- LINE 圖示 -->
+		  <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LINE</title><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        </a>
+        <a href="https://www.xiaohongshu.com/user/你的小紅書帳號" target="_blank" aria-label="小紅書" class="social-icon xhs">
+          <!-- 小紅書圖示 -->
+          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Xiaohongshu</title><path d="M22.405 9.879c.002.016.01.02.07.019h.725a.797.797 0 0 0 .78-.972.794.794 0 0 0-.884-.618.795.795 0 0 0-.692.794c0 .101-.002.666.001.777zm-11.509 4.808c-.203.001-1.353.004-1.685.003a2.528 2.528 0 0 1-.766-.126.025.025 0 0 0-.03.014L7.7 16.127a.025.025 0 0 0 .01.032c.111.06.336.124.495.124.66.01 1.32.002 1.981 0 .01 0 .02-.006.023-.015l.712-1.545a.025.025 0 0 0-.024-.036zM.477 9.91c-.071 0-.076.002-.076.01a.834.834 0 0 0-.01.08c-.027.397-.038.495-.234 3.06-.012.24-.034.389-.135.607-.026.057-.033.042.003.112.046.092.681 1.523.787 1.74.008.015.011.02.017.02.008 0 .033-.026.047-.044.147-.187.268-.391.371-.606.306-.635.44-1.325.486-1.706.014-.11.021-.22.03-.33l.204-2.616.022-.293c.003-.029 0-.033-.03-.034zm7.203 3.757a1.427 1.427 0 0 1-.135-.607c-.004-.084-.031-.39-.235-3.06a.443.443 0 0 0-.01-.082c-.004-.011-.052-.008-.076-.008h-1.48c-.03.001-.034.005-.03.034l.021.293c.076.982.153 1.964.233 2.946.05.4.186 1.085.487 1.706.103.215.223.419.37.606.015.018.037.051.048.049.02-.003.742-1.642.804-1.765.036-.07.03-.055.003-.112zm3.861-.913h-.872a.126.126 0 0 1-.116-.178l1.178-2.625a.025.025 0 0 0-.023-.035l-1.318-.003a.148.148 0 0 1-.135-.21l.876-1.954a.025.025 0 0 0-.023-.035h-1.56c-.01 0-.02.006-.024.015l-.926 2.068c-.085.169-.314.634-.399.938a.534.534 0 0 0-.02.191.46.46 0 0 0 .23.378.981.981 0 0 0 .46.119h.59c.041 0-.688 1.482-.834 1.972a.53.53 0 0 0-.023.172.465.465 0 0 0 .23.398c.15.092.342.12.475.12l1.66-.001c.01 0 .02-.006.023-.015l.575-1.28a.025.025 0 0 0-.024-.035zm-6.93-4.937H3.1a.032.032 0 0 0-.034.033c0 1.048-.01 2.795-.01 6.829 0 .288-.269.262-.28.262h-.74c-.04.001-.044.004-.04.047.001.037.465 1.064.555 1.263.01.02.03.033.051.033.157.003.767.009.938-.014.153-.02.3-.06.438-.132.3-.156.49-.419.595-.765.052-.172.075-.353.075-.533.002-2.33 0-4.66-.007-6.991a.032.032 0 0 0-.032-.032zm11.784 6.896c0-.014-.01-.021-.024-.022h-1.465c-.048-.001-.049-.002-.05-.049v-4.66c0-.072-.005-.07.07-.07h.863c.08 0 .075.004.075-.074V8.393c0-.082.006-.076-.08-.076h-3.5c-.064 0-.075-.006-.075.073v1.445c0 .083-.006.077.08.077h.854c.075 0 .07-.004.07.07v4.624c0 .095.008.084-.085.084-.37 0-1.11-.002-1.304 0-.048.001-.06.03-.06.03l-.697 1.519s-.014.025-.008.036c.006.01.013.008.058.008 1.748.003 3.495.002 5.243.002.03-.001.034-.006.035-.033v-1.539zm4.177-3.43c0 .013-.007.023-.02.024-.346.006-.692.004-1.037.004-.014-.002-.022-.01-.022-.024-.005-.434-.007-.869-.01-1.303 0-.072-.006-.071.07-.07l.733-.003c.041 0 .081.002.12.015.093.025.16.107.165.204.006.431.002 1.153.001 1.153zm2.67.244a1.953 1.953 0 0 0-.883-.222h-.18c-.04-.001-.04-.003-.042-.04V10.21c0-.132-.007-.263-.025-.394a1.823 1.823 0 0 0-.153-.53 1.533 1.533 0 0 0-.677-.71 2.167 2.167 0 0 0-1-.258c-.153-.003-.567 0-.72 0-.07 0-.068.004-.068-.065V7.76c0-.031-.01-.041-.046-.039H17.93s-.016 0-.023.007c-.006.006-.008.012-.008.023v.546c-.008.036-.057.015-.082.022h-.95c-.022.002-.028.008-.03.032v1.481c0 .09-.004.082.082.082h.913c.082 0 .072.128.072.128V11.19s.003.117-.06.117h-1.482c-.068 0-.06.082-.06.082v1.445s-.01.068.064.068h1.457c.082 0 .076-.006.076.079v3.225c0 .088-.007.081.082.081h1.43c.09 0 .082.007.082-.08v-3.27c0-.029.006-.035.033-.035l2.323-.003c.098 0 .191.02.28.061a.46.46 0 0 1 .274.407c.008.395.003.79.003 1.185 0 .259-.107.367-.33.367h-1.218c-.023.002-.029.008-.028.033.184.437.374.871.57 1.303a.045.045 0 0 0 .04.026c.17.005.34.002.51.003.15-.002.517.004.666-.01a2.03 2.03 0 0 0 .408-.075c.59-.18.975-.698.976-1.313v-1.981c0-.128-.01-.254-.034-.38 0 .078-.029-.641-.724-.998z"/></svg>
+        </a>
+      </div>
+      <!-- 新增社群圖示結束 -->
+	  
+    </div>
+    <div class="hero-media">
+      <img src="img/self/刀客.jpg" alt="優雅的人像攝影封面" loading="eager" />
+    </div>
+  </main>
+
+<!-- About -->
+<section id="about">
+  <div class="section-head"><h2>關於我</h2></div>
+  <div class="about">
+    <div class="me">
+      <img alt="攝影師肖像" src="img/self/抽菸.jpg" loading="lazy">
+    </div>
+    <div>
+      <p class="lead">嗨，我是 <strong>Jennifer</strong>，自由接案攝影師。擅長以自然光呈現乾淨、耐看的色調，將人物的氣質與場景氛圍融合在畫面裡。</p>
+      <p>我會抽菸，要不要也來抽一根阿。</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="https://lin.ee/X8jPiQU">我要預約</a>
+        <a class="btn" href="https://www.instagram.com/imjenniferrr._?igsh=bjdzaWFpcmU1OHU0" target="_blank" rel="noreferrer noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+  <!-- Services -->
+  <section id="services">
+    <div class="section-head">
+      <div>
+        <h2>拍攝服務與方案</h2>
+        <p class="muted">依需求客製，皆含修圖與雲端交付。下列為常見方案。</p>
+      </div>
+    </div>
+    <div class="cards">
+      <!-- 方案卡片：可保留你現有內容 -->
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-head"><h2>預約拍攝</h2></div>
+    <div class="contact">
+      <form id="form">
+        <!-- 你的表單欄位保留 -->
+      </form>
+      <div>
+        <div class="card" style="padding:18px">
+          <h3 style="margin:0 0 10px">聯絡方式</h3>
+          <p class="muted">
+			Email：<a href="mailto:jennifer891211@gmail.com">jennifer891211@gmail.com</a><br>
+			Instagram：<a href="https://www.instagram.com/imjenniferrr._?igsh=bjdzaWFpcmU1OHU0" target="_blank" rel="noreferrer noopener">@imjenniferrr._</a><br>
+			Line：<a href="https://lin.ee/X8jPiQU">@Jennifer</a><br>
+			地點：雙北，中壢，桃園</p>
+          <h3 style="margin:14px 0 10px">常見問題</h3>
+          <p class="muted"><strong>交件時間？</strong> 約 7–14 天（商業案依需求另議）。<br><strong>修圖風格？</strong> 乾淨自然、皮膚保留質感。<br><strong>是否提供髮妝？</strong> 可配合造型師，另行報價。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© <span id="y"></span> Jennifer • All rights reserved.</footer>
+
+  <!-- Lightbox（若首頁不顯示作品，可無視這段） -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <span class="close" id="close">✕</span>
+    <img id="lightImg" alt="lightbox" />
+  </div>
+
+<script>
+(function(){
+  // === 手機漢堡選單開合 ===
+  const burger = document.getElementById('burger');
+  const mobile = document.getElementById('mobile');
+  if (burger && mobile) {
+    const toggle = () => {
+      const open = mobile.style.display === 'block';
+      mobile.style.display = open ? 'none' : 'block';
+      burger.setAttribute('aria-expanded', String(!open));
+      // 開單層選單時鎖捲動，避免底層滑動
+      document.body.style.overflow = open ? '' : 'hidden';
+    };
+    burger.addEventListener('click', toggle);
+    // 點選單任一連結就關閉
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobile.style.display = 'none';
+      burger.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }));
+  }
+
+  // === 導覽列「亮燈」：依目前頁面加上 .active ===
+  const currentPage = (location.pathname.split('/').pop() || 'index.html');
+  document.querySelectorAll('.links a, .mobile a').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    const page = (href.split('#')[0] || 'index.html');
+    if (page === currentPage) a.classList.add('active');
+  });
+
+  // === 作品頁專用：卡片進場動畫 + 自動微放大 + 分類捲動/點擊高亮 ===
+  if (currentPage === 'works.html') {
+    const cards = document.querySelectorAll('.card');
+
+    // 卡片進場（.card -> .in）
+    const cardIO = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    cards.forEach(c => cardIO.observe(c));
+
+    // 行動裝置：點卡片切換 .reveal（顯示右下角 meta）
+    cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
+
+    // 行動裝置滑到該卡片時自動微放大（加上 .peek）
+    const zoomIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('peek');
+        else e.target.classList.remove('peek');
+      });
+    }, { threshold: 0.6 });
+    cards.forEach(c => zoomIO.observe(c));
+
+    // 分類捲動高亮（上方膠囊＋左側側欄同步）
+    const sections = [...document.querySelectorAll('section[id]')];
+    const cats = document.querySelectorAll('.category-nav .cat, .side-nav .cat');
+    const setActiveById = (id) => {
+      cats.forEach(c => c.classList.toggle('active-cat', c.getAttribute('href') === '#' + id));
+    };
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) setActiveById(e.target.id); });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(s => spy.observe(s));
+
+    // ★ 新增：點分類就立即高亮，不用等滾動命中
+    cats.forEach(cat => {
+      cat.addEventListener('click', () => {
+        const href = cat.getAttribute('href') || '';
+        if (href.startsWith('#')) setActiveById(href.slice(1));
+      });
+    });
+    // ★ 新增：網址 hash 改變（或直接帶 # 進頁）也同步高亮
+    const updateFromHash = () => {
+      if (location.hash) setActiveById(location.hash.replace('#',''));
+    };
+    window.addEventListener('hashchange', updateFromHash);
+    updateFromHash();
+
+    // 滑到最底部時，直接亮最後一個分類
+    window.addEventListener('scroll', () => {
+      const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (nearBottom && sections.length) setActiveById(sections[sections.length - 1].id);
+    });
+  }
+
+  // === 圖片延後載入（若標籤沒設 loading="lazy"，這裡補上） ===
+  document.querySelectorAll('img:not([loading])').forEach(img => img.loading = 'lazy');
+})();
+</script>
+
+</body>
+</html>
