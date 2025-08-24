@@ -223,9 +223,6 @@
 
 <script>
 (function(){
-  // 標記 JS 已啟動，才啟用 .js 前綴的淡入動畫
-  document.documentElement.classList.add('js');
-
   // === 手機漢堡選單開合 ===
   const burger = document.getElementById('burger');
   const mobile = document.getElementById('mobile');
@@ -234,9 +231,11 @@
       const open = mobile.style.display === 'block';
       mobile.style.display = open ? 'none' : 'block';
       burger.setAttribute('aria-expanded', String(!open));
+      // 開單層選單時鎖捲動，避免底層滑動
       document.body.style.overflow = open ? '' : 'hidden';
     };
     burger.addEventListener('click', toggle);
+    // 點選單任一連結就關閉
     mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       mobile.style.display = 'none';
       burger.setAttribute('aria-expanded','false');
@@ -244,7 +243,7 @@
     }));
   }
 
-  // === 導覽列「亮燈」 ===
+  // === 導覽列「亮燈」：依目前頁面加上 .active ===
   const currentPage = (location.pathname.split('/').pop() || 'index.html');
   document.querySelectorAll('.links a, .mobile a').forEach(a => {
     const href = a.getAttribute('href') || '';
@@ -252,17 +251,20 @@
     if (page === currentPage) a.classList.add('active');
   });
 
-  // === 卡片進場 + 手機滑到微放大 + 點擊 reveal（works & rental 共用） ===
-  if (currentPage === 'works.html' || currentPage === 'rental.html') {
+  // === 作品頁專用：卡片進場動畫 + 自動微放大 + 分類捲動/點擊高亮 ===
+  if (currentPage === 'rental.html' || currentPage === 'works.html') {
     const cards = document.querySelectorAll('.card');
 
-    // 進場淡入（.js .card/.card.in 搭配）
+    // 卡片進場（.card -> .in）
     const cardIO = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
     cards.forEach(c => cardIO.observe(c));
 
-    // 手機：滑到卡片就加 .peek（圖片微放大）
+    // 行動裝置：點卡片切換 .reveal（顯示右下角 meta）
+    cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
+
+    // 行動裝置滑到該卡片時自動微放大（加上 .peek）
     const zoomIO = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) e.target.classList.add('peek');
@@ -271,44 +273,39 @@
     }, { threshold: 0.6 });
     cards.forEach(c => zoomIO.observe(c));
 
-    // 點一下切換 .reveal（行動版顯示右下角 meta）
-    cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
-  }
-
-  // === 作品頁專屬：分類捲動/點擊/hash 高亮 ===
-  if (currentPage === 'works.html') {
+    // 分類捲動高亮（上方膠囊＋左側側欄同步）
     const sections = [...document.querySelectorAll('section[id]')];
     const cats = document.querySelectorAll('.category-nav .cat, .side-nav .cat');
     const setActiveById = (id) => {
       cats.forEach(c => c.classList.toggle('active-cat', c.getAttribute('href') === '#' + id));
     };
-
     const spy = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) setActiveById(e.target.id); });
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
     sections.forEach(s => spy.observe(s));
 
-    // 點分類立即高亮
+    // ★ 新增：點分類就立即高亮，不用等滾動命中
     cats.forEach(cat => {
       cat.addEventListener('click', () => {
         const href = cat.getAttribute('href') || '';
         if (href.startsWith('#')) setActiveById(href.slice(1));
       });
     });
-
-    // URL hash 改變也同步高亮（含直接帶錨點進頁）
-    const updateFromHash = () => { if (location.hash) setActiveById(location.hash.slice(1)); };
+    // ★ 新增：網址 hash 改變（或直接帶 # 進頁）也同步高亮
+    const updateFromHash = () => {
+      if (location.hash) setActiveById(location.hash.replace('#',''));
+    };
     window.addEventListener('hashchange', updateFromHash);
     updateFromHash();
 
-    // 滑到底 -> 亮最後一項
+    // 滑到最底部時，直接亮最後一個分類
     window.addEventListener('scroll', () => {
       const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
       if (nearBottom && sections.length) setActiveById(sections[sections.length - 1].id);
     });
   }
 
-  // === 圖片 lazy（保底） ===
+  // === 圖片延後載入（若標籤沒設 loading="lazy"，這裡補上） ===
   document.querySelectorAll('img:not([loading])').forEach(img => img.loading = 'lazy');
 })();
 </script>
