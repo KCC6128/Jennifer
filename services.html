@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>拍攝方案 — Jennifer Photography</title>
+  <meta name="description" content="人像、情侶、婚紗、旅拍等客製化拍攝方案。含企劃、拍攝、精修、雲端交件，提供自然光與故事感的專屬寫真。">
+  <meta property="og:title" content="拍攝方案 — Jennifer Photography" />
+  <meta property="og:description" content="人像、情侶、婚紗、旅拍等客製化拍攝方案。含企劃、拍攝、精修、雲端交件。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://你的網域/services.html" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1511715281071-14ad53f0b6b6?q=80&w=1200&auto=format&fit=crop" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>📷</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0f1115; --panel:#12151b; --muted:#9aa3b2; --text:#e6e8ec; --brand:#e6c499; --brand-2:#ffd3a3; --ring: rgba(230,196,153,.35); --border: #232735; --shadow: 0 10px 30px rgba(0,0,0,.35); }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(230,196,153,.09), transparent 60%),
+        radial-gradient(1000px 600px at -10% 30%, rgba(149,114,252,.08), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Nav */
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);
+      background:linear-gradient(to bottom, rgba(15,17,21,.9), rgba(15,17,21,.55));
+      border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 20px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.5px}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(45deg,var(--brand),var(--brand-2)); box-shadow:0 0 0 4px var(--ring)}
+    .links{display:flex;gap:26px;align-items:center}
+    .links a{opacity:.85}.links a:hover{opacity:1}
+    .cta{padding:10px 16px;border:1px solid var(--border);border-radius:999px;background:linear-gradient(180deg,#171a22,#12151b); box-shadow:var(--shadow)}
+    .burger{display:none}
+    .active{opacity:1 !important; text-decoration:underline; text-underline-offset:6px}
+
+    /* Hero */
+    .hero{max-width:1200px;margin:0 auto;padding:80px 20px 50px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+    .title{font-family:"Playfair Display", serif; font-weight:700; font-size:clamp(36px,5.6vw,56px); line-height:1.05; margin:0 0 12px; }
+    .lead{color:#c9ced8; font-size:18px; line-height:1.7}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--border);padding:10px 16px;border-radius:12px;background:#141821}
+    .btn.primary{background:linear-gradient(180deg,#171a22,#12151b)}
+    .muted{color:var(--muted)}
+
+    /* Sections & cards */
+    section{max-width:1200px;margin:0 auto;padding:60px 20px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .g4{grid-column:span 4}
+    .g6{grid-column:span 6}
+    .card{border:1px solid var(--border);background:linear-gradient(180deg,#131720,#11151c);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+    .card .hd{padding:18px;border-bottom:1px solid var(--border)}
+    .card .hd h3{margin:0;font-size:20px}
+    .price{font-weight:800;font-size:22px;background:linear-gradient(120deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    ul.clean{list-style:none;padding:0 18px 6px;margin:12px 0 0;color:#c9ced8}
+    ul.clean li{margin:8px 0}
+    .card .ft{margin-top:auto;padding:16px 18px;border-top:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap}
+
+    /* Process */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .step{border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,#131720,#11151c);padding:18px}
+    .step .no{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#1b1306;font-weight:800;margin-right:8px}
+
+    /* FAQ / panel */
+    .panel{border:1px solid var(--border); background:linear-gradient(180deg,#131720,#11151c); border-radius:14px; padding:18px}
+
+    /* Bottom CTA */
+    .cta-section{
+      max-width:1100px;margin:0 auto;padding:64px 20px;text-align:center;
+      border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,#131720,#11151c);box-shadow:var(--shadow)
+    }
+    .cta-section h2{margin:0 0 10px;font-family:"Playfair Display",serif;font-size:clamp(22px,3.2vw,34px);}
+    .cta-section .muted{margin:6px 0 18px}
+
+    footer{border-top:1px solid var(--border); padding:24px 20px; color:#9aa3b2; text-align:center}
+
+    /* Mobile */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;text-align:center}
+      .hero-cta{justify-content:center}
+      .grid{grid-template-columns:repeat(6,1fr)}
+      .g4{grid-column:span 6}
+      .g6{grid-column:span 6}
+      .steps{grid-template-columns:1fr 1fr}
+      .links{display:none}
+      .burger{display:block;cursor:pointer}
+      .mobile{display:none;position:absolute;top:56px;right:20px;background:#0f1219;border:1px solid var(--border);border-radius:12px;padding:10px;box-shadow:var(--shadow)}
+      .mobile a{display:block;padding:10px 12px}
+    }
+
+    /* 行動友善與導覽細節 */
+    .nav { padding-top: max(14px, env(safe-area-inset-top)); }      /* iOS 瀏海安全區 */
+    section[id] { scroll-margin-top: 90px; }                         /* 錨點不被導覽擋住 */
+    @media (max-width:980px){ section[id]{ scroll-margin-top: 110px; } }
+    button, .btn, .links .cta, .mobile a { min-height:44px; }        /* 觸控高度 */
+    .links a{ display:inline-flex; align-items:center; line-height:1; }
+    .links a:not(.cta){ padding:10px 0; }
+    .links .cta{ padding:10px 16px; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<header class="nav">
+  <div class="nav-inner">
+    <!-- 左側品牌 -->
+    <a href="index.html#top" class="brand">
+      <span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span>
+    </a>
+
+    <!-- 手機版漢堡選單按鈕：放在品牌後、桌機選單前 -->
+    <button id="burger" class="burger" aria-label="開啟選單" aria-expanded="false">☰</button>
+
+    <!-- 桌機版選單 -->
+    <nav class="links">
+      <a href="index.html#top">首頁</a>
+      <a href="works.html">作品</a>
+      <a href="services.html">拍攝方案</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="https://lin.ee/X8jPiQU" class="cta">預約</a>
+    </nav>
+
+    <!-- 手機版下拉選單容器 -->
+    <div class="mobile" id="mobile">
+      <a href="index.html#top">首頁</a>
+      <a href="works.html">作品</a>
+      <a href="services.html">拍攝方案</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="https://lin.ee/X8jPiQU">預約</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div>
+    <h1 class="title">拍攝方案</h1>
+    <p class="lead">人像、情侶、婚紗、旅拍 — 依需求客製化。含企劃、拍攝、精修、雲端交件。</p>
+    <div class="hero-cta" style="margin-top:22px">
+      <a class="btn primary" href="#plans">瀏覽方案</a>
+      <a class="btn" href="https://lin.ee/X8jPiQU">立即預約</a>
+    </div>
+  </div>
+</section>
+
+<!-- Plans -->
+<section id="plans">
+  <h2 class="title" style="font-size:clamp(28px,4vw,40px);margin-bottom:12px;">方案與價目</h2>
+  <p class="muted" style="margin-top:0">以下為常見組合，可依需求客製調整。</p>
+
+  <div class="grid" style="margin-top:16px">
+    <!-- 一般寫真 -->
+    <article class="card g4">
+      <div class="hd">
+        <h3>一般寫真</h3>
+        <div class="price">NT$ 3,000 起</div>
+      </div>
+      <ul class="clean">
+        <li>拍攝時間 1-2 小時｜單一地點</li>
+        <li>調色 30 張以上｜精修照 10 張</li>
+        <li>雲端交件（14–31 天）</li>
+        <li>詳細資訊請洽官方Line</li>
+      </ul>
+      <div class="ft">
+        <a class="btn primary" href="index.html#contact">詢問這個方案</a>
+        <a class="btn" href="works.html">看看作品</a>
+      </div>
+    </article>
+
+    <!-- 棚拍寫真 -->
+    <article class="card g4">
+      <div class="hd">
+        <h3>棚拍寫真</h3>
+        <div class="price">NT$ 4,000 起</div>
+      </div>
+      <ul class="clean">
+        <li>拍攝時間 1 小時｜板橋車站附近攝影棚</li>
+        <li>毛片全給｜精修照 6 張</li>
+        <li>雲端交件（14–31 天）</li>
+        <li>詳細資訊請洽官方Line</li>
+      </ul>
+      <div class="ft">
+        <a class="btn primary" href="index.html#contact">詢問這個方案</a>
+        <a class="btn" href="works.html#Studio_shot">看看作品</a>
+      </div>
+    </article>
+
+    <!-- 形象照/模特卡 -->
+    <article class="card g4">
+      <div class="hd">
+        <h3>形象照/模特卡</h3>
+        <div class="price">NT$ 5,000 起</div>
+      </div>
+      <ul class="clean">
+        <li>拍攝時間 1 小時｜板橋車站附近攝影棚</li>
+        <li>毛片全給｜精修照 5 張</li>
+        <li>雲端交件（7 天內）</li>
+        <li>詳細資訊請洽官方Line</li>
+      </ul>
+      <div class="ft">
+        <a class="btn primary" href="index.html#contact">詢問這個方案</a>
+        <a class="btn" href="rental.html">搭配服裝租借</a>
+      </div>
+    </article>
+	
+    <!-- 結婚登記 -->
+    <article class="card g4">
+      <div class="hd">
+        <h3>結婚登記</h3>
+        <div class="price">NT$ 6,000 </div>
+      </div>
+      <ul class="clean">
+        <li>拍攝時間 2 小時</li>
+        <li>調色照全給</li>
+        <li>雲端交件（7 天內）</li>
+        <li>詳細資訊請洽官方Line</li>
+      </ul>
+      <div class="ft">
+        <a class="btn primary" href="index.html#contact">詢問這個方案</a>
+        <a class="btn" href="rental.html">搭配服裝租借</a>
+      </div>
+    </article>
+	
+    <!-- 活動紀錄 -->
+    <article class="card g4">
+      <div class="hd">
+        <h3>活動紀錄</h3>
+        <div class="price">NT$ 1,500 / 小時 </div>
+      </div>
+      <ul class="clean">
+        <li>調色照全給</li>
+        <li>雲端交件（14–31 天內）</li>
+        <li>詳細資訊請洽官方Line</li>
+      </ul>
+      <div class="ft">
+        <a class="btn primary" href="index.html#contact">詢問這個方案</a>
+        <a class="btn" href="rental.html">搭配服裝租借</a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <p class="muted"><strong>加購項目：</strong> 加購精修 NT$200/張，照片人數增加 NT$50/人。</p>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="process">
+  <h2 class="title" style="font-size:clamp(28px,4vw,40px);margin-bottom:12px;">拍攝流程</h2>
+  <div class="steps">
+    <div class="step"><div class="no">1</div><strong>初談諮詢</strong><br><span class="muted">討論風格、預算、時間與地點，提供服裝建議。</span></div>
+    <div class="step"><div class="no">2</div><strong>企劃與準備</strong><br><span class="muted">確認拍攝腳本、道具與行前注意事項。</span></div>
+    <div class="step"><div class="no">3</div><strong>正式拍攝</strong><br><span class="muted">現場引導姿勢與情緒，確保自然好看。</span></div>
+    <div class="step"><div class="no">4</div><strong>精修交件</strong><br><span class="muted">7–14 天雲端交件，依方案提供精修張數。</span></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <h2 class="title" style="font-size:clamp(28px,4vw,40px);margin-bottom:12px;">常見問題</h2>
+  <div class="panel">
+    <p><strong>Q：會提供原始檔（RAW）嗎？</strong><br><span class="muted">不提供 RAW，交件包含依方案規格的精修圖與全數小檔。</span></p>
+    <p><strong>Q：交件時間多久？</strong><br><span class="muted">一般 7–14 天，婚紗或大型企劃 10–20 天。</span></p>
+    <p><strong>Q：遇雨怎麼辦？</strong><br><span class="muted">可改期一次（以檔期為主），若需臨時改地點可能產生差旅費。</span></p>
+    <p><strong>Q：可以帶寵物或朋友一起嗎？</strong><br><span class="muted">可以，建議事先告知以利評估動線與時間。</span></p>
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="cta-section">
+  <h2>準備好留下屬於你的故事了嗎？</h2>
+  <p class="muted">人像・情侶・婚紗・旅拍｜自然光與故事感的專屬寫真</p>
+  <div class="hero-cta">
+    <a class="btn primary" href="https://lin.ee/X8jPiQU">立即預約拍攝</a>
+    <a class="btn" href="works.html">看看作品</a>
+  </div>
+</section>
+
+<footer>© <span id="y"></span> Jennifer • All rights reserved.</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // 手機選單
+  const burger = document.getElementById('burger');
+  const mobile = document.getElementById('mobile');
+  burger?.addEventListener('click', () => {
+    const open = mobile.style.display === 'block';
+    mobile.style.display = open ? 'none' : 'block';
+    burger.setAttribute('aria-expanded', String(!open));
+  });
+  document.querySelectorAll('#mobile a').forEach(a =>
+    a.addEventListener('click', ()=>{ mobile.style.display='none'; })
+  );
+
+  // 自動高亮（依當前頁面）
+  (function autoActive(){
+    const current = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    document.querySelectorAll('.links a, .mobile a').forEach(a=>{
+      const href = a.getAttribute('href'); if(!href) return;
+      try{
+        const url = new URL(href, window.location.origin);
+        if(url.hash) return;
+        const page = (url.pathname.split('/').pop() || 'index.html').toLowerCase();
+        if(page === current){ a.classList.add('active'); }
+      }catch(e){}
+    });
+  })();
+</script>
+</body>
+</html>
