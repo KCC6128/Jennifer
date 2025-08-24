@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>作品集 — Jennifer Photography</title>
+  <meta name="description" content="Jennifer 攝影作品集：人像、婚紗、旅拍、商業攝影，捕捉真實情感與光影。">
+  <meta property="og:title" content="作品集 — Jennifer Photography" />
+  <meta property="og:description" content="人像、婚紗、旅拍、商業攝影，捕捉真實情感與光影。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://example.com/works.html" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1511715281071-14ad53f0b6b6?q=80&w=1200&auto=format&fit=crop" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>📷</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#0f1115; --panel:#12151b; --muted:#9aa3b2; --text:#e6e8ec; --brand:#e6c499; --brand-2:#ffd3a3; --ring: rgba(230,196,153,.35); --border: #232735; --shadow: 0 10px 30px rgba(0,0,0,.35); }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(1200px 800px at 80% -10%, rgba(230,196,153,.09), transparent 60%), radial-gradient(1000px 600px at -10% 30%, rgba(149,114,252,.08), transparent 60%), var(--bg); color:var(--text);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, 'PingFang TC', 'Microsoft JhengHei', sans-serif;}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(10px);background:linear-gradient(to bottom, rgba(15,17,21,.9), rgba(15,17,21,.55));border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 20px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.5px}
+    .brand .dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(45deg,var(--brand),var(--brand-2)); box-shadow:0 0 0 4px var(--ring)}
+    .links{display:flex;gap:26px;align-items:center}
+    .links a{opacity:.85}.links a:hover{opacity:1}
+    .cta{padding:10px 16px;border:1px solid var(--border);border-radius:999px;background:linear-gradient(180deg,#171a22,#12151b); box-shadow:var(--shadow)}
+    .burger{display:none}
+
+    /* Active 樣式（一致） */
+    .active{opacity:1 !important; text-decoration:underline; text-underline-offset:6px}
+
+    .hero{max-width:1200px;margin:0 auto;padding:80px 20px 50px;text-align:center}
+    .hero h1{font-family:"Playfair Display",serif;font-size:clamp(36px,5.5vw,60px);margin:0}
+    .hero p{color:#c9ced8;margin-top:12px;font-size:18px}
+
+    section{max-width:1200px;margin:0 auto;padding:60px 20px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .card{position:relative;border:1px solid #232735;background:linear-gradient(180deg,#131720,#11151c);border-radius:14px;overflow:hidden}
+    .card .meta{position:absolute;inset:auto 10px 10px 10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .chip{font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(12,14,18,.55);backdrop-filter:blur(6px);border:1px solid #232735}
+    .g3{grid-column:span 4} .g6{grid-column:span 6}
+
+    footer{border-top:1px solid #232735;padding:24px 20px;color:#9aa3b2;text-align:center}
+	
+		/* 置頂分類膠囊列 */
+	.category-nav{
+	  position: sticky; top: 60px; z-index: 45;
+	  display: flex; gap: 10px; align-items: center; justify-content: center;
+	  padding: 10px 16px; margin: 0 auto; max-width: 1200px;
+	  background: linear-gradient(to bottom, rgba(15,17,21,.85), rgba(15,17,21,.55));
+	  backdrop-filter: saturate(160%) blur(6px);
+	  border-bottom: 1px solid var(--border); border-radius: 12px;
+	}
+	.category-nav .cat{
+	  display: inline-block; padding: 10px 14px; border-radius: 999px;
+	  border: 1px solid var(--border); background:#151923; opacity:.9;
+	  font-weight: 600; transition: transform .15s ease, opacity .15s ease, box-shadow .2s ease;
+	}
+	.category-nav .cat:hover{ opacity:1; transform: translateY(-1px); }
+	.category-nav .cat.active-cat{
+	  background: linear-gradient(135deg,var(--brand),var(--brand-2)); color:#1b1306;
+	  border-color: transparent; box-shadow: 0 6px 18px rgba(230,196,153,.25);
+	}
+	/* 手機：可左右滑動 */
+	@media (max-width:980px){
+	  .category-nav{ overflow-x: auto; justify-content: flex-start; gap: 8px; }
+	  .category-nav::-webkit-scrollbar{ display:none; }
+	}
+
+	/* 錨點捲動定位：避免被固定導覽／分類列遮住 */
+	section[id]{ scroll-margin-top: 120px; }
+	
+	/* 區塊標題（更大＋更有質感） */
+	.section-title{
+	  font-family: "Noto Serif TC","Playfair Display",serif;
+	  font-weight: 900;
+	  font-size: clamp(24px, 3.6vw, 40px); /* 手機到桌機自動放大 */
+	  line-height: 1.15;
+	  letter-spacing: .02em;
+	  margin: 0 0 22px;
+	  position: relative;
+	}
+	.section-title::after{
+	  content:"";
+	  position:absolute; left:0; bottom:-10px;
+	  width: 80px; height: 6px; border-radius: 999px;
+	  background: linear-gradient(90deg,var(--brand),var(--brand-2));
+	  box-shadow: 0 8px 22px rgba(230,196,153,.28);
+	}
+
+	.section-title.wedding{
+	  font-family: "Noto Serif TC","Playfair Display",serif;
+	  font-weight: 900;
+	  font-size: clamp(24px, 3.6vw, 40px); /* 手機到桌機自動放大 */
+	  line-height: 1.15;
+	  letter-spacing: .02em;
+	  margin: 0 0 22px;
+	  position: relative;
+	}
+	.section-title.wedding::after{
+	  content:"";
+	  position:absolute; left:0; bottom:-10px;
+	  width: 120px; height: 6px; border-radius: 999px;
+	  background: linear-gradient(90deg,var(--brand),var(--brand-2));
+	  box-shadow: 0 8px 22px rgba(230,196,153,.28);
+	}
+	
+	/* 固定在畫面左側的側邊分類框 */
+	.side-nav{
+	  position: fixed;
+	  top: 110px;              /* 讓出上方導覽＋標題高度；可微調 */
+	  left: 24px;              /* 想放右邊就改成 right:24px; 並移除/註解掉 left */
+	  width: 168px;
+	  display: grid;
+	  gap: 10px;
+	  padding: 12px;
+	  border: 1px solid var(--border);
+	  border-radius: 14px;
+	  background:#0f1219;
+	  box-shadow: var(--shadow);
+	  z-index: 60;
+	}
+	.side-nav .cat{
+	  display: block;
+	  padding: 10px 12px;
+	  border-radius: 999px;
+	  border: 1px solid var(--border);
+	  background:#151923;
+	  opacity:.9;
+	  font-weight:600;
+	}
+	.side-nav .cat:hover{ opacity:1; }
+	.side-nav .cat.active-cat{
+	  background: linear-gradient(135deg,var(--brand),var(--brand-2));
+	  color:#1b1306;
+	  border-color: transparent;
+	  box-shadow: 0 6px 18px rgba(230,196,153,.25);
+	}
+
+    @media(max-width:980px){
+      .grid{grid-template-columns:repeat(6,1fr)}
+      .g3,.g6{grid-column:span 6}
+      .links{display:none}
+      .burger{display:block;cursor:pointer}
+      .mobile{display:none;position:absolute;top:56px;right:20px;background:#0f1219;border:1px solid #232735;border-radius:12px;padding:10px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+      .mobile a{display:block;padding:10px 12px}
+	  .side-nav{ display:none; }
+    }
+
+	/* iOS 瀏海安全區 */
+	.nav { padding-top: max(14px, env(safe-area-inset-top)); }
+	/* 觸控目標更好點 */
+	button, .btn, .links a { min-height: 44px; }
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <!-- 左側品牌 -->
+    <a href="index.html#top" class="brand">
+      <span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span>
+    </a>
+
+    <!-- 手機版漢堡選單按鈕：放在品牌後、桌機選單前 -->
+    <button id="burger" class="burger" aria-label="開啟選單" aria-expanded="false">☰</button>
+
+    <!-- 桌機版選單 -->
+    <nav class="links">
+      <a href="index.html#about">關於</a>
+      <a href="index.html#services">服務</a>
+      <a href="works.html">作品</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="index.html#contact" class="cta">預約</a>
+    </nav>
+
+    <!-- 手機版下拉選單容器 -->
+    <div class="mobile" id="mobile">
+      <a href="index.html#about">關於</a>
+      <a href="index.html#services">服務</a>
+      <a href="works.html">作品</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="index.html#contact">預約</a>
+    </div>
+  </div>
+</header>
+  
+<aside class="side-nav" aria-label="快速分類導覽">
+  <a class="cat" href="#japan">日系寫真</a>
+  <a class="cat" href="#couple">情侶寫真</a>
+  <a class="cat" href="#birthday">生日寫真</a>
+  <a class="cat" href="#Studio_shot">棚拍寫真</a>
+  <a class="cat" href="#light_wedding_dress">輕婚紗寫真</a>
+</aside>
+
+
+<section class="hero">
+  <h1>寫真作品集</h1>
+	<nav class="category-nav" aria-label="作品分類">
+	  <a class="cat" href="#japan">日系寫真</a>
+	  <a class="cat" href="#couple">情侶寫真</a>
+	  <a class="cat" href="#birthday">生日寫真</a>
+	  <a class="cat" href="#Studio_shot">棚拍寫真</a>
+	  <a class="cat" href="#light_wedding_dress">輕婚紗寫真</a>
+	</nav>
+</section>
+
+<!-- 作品分類（示意，請換成你的作品） -->
+<section id="japan">
+  <h2 class="section-title">日系寫真</h2>
+  <div class="grid">
+    <figure class="card g3"><img src="img/works/日系寫真/貓咪浴衣.jpg" alt="貓咪浴衣"><figcaption class="meta"></figcaption></figure>
+    <figure class="card g3"><img src="img/works/日系寫真/居家坦芸.jpg" alt="居家坦芸"><figcaption class="meta"></figcaption></figure>
+	<figure class="card g3"><img src="img/works/日系寫真/凡亞抓蝴蝶.jpg" alt="凡亞抓蝴蝶"><figcaption class="meta"></figcaption></figure>
+  </div>
+</section>
+
+<section id="couple">
+  <h2 class="section-title">情侶寫真</h2>
+  <div class="grid">
+    <figure class="card g3"><img src="img/works/情侶寫真/CU情侶.jpg" alt="CU情侶"><figcaption class="meta"></figcaption></figure>
+    <figure class="card g3"><img src="img/works/情侶寫真/櫻花情侶.jpg" alt="櫻花情侶"><figcaption class="meta"></figcaption></figure>
+	<figure class="card g3"><img src="img/works/情侶寫真/Irene情侶.jpg" alt="Irene情侶"><figcaption class="meta"></figcaption></figure>
+  </div>
+</section>
+
+<section id="birthday">
+  <h2 class="section-title">生日寫真</h2>
+  <div class="grid">
+    <figure class="card g3"><img src="img/works/生日寫真/坦芸生日.jpg" alt="坦芸生日"><figcaption class="meta"></figcaption></figure>
+	<figure class="card g3"><img src="img/works/生日寫真/成成生日.jpg" alt="成成生日"><figcaption class="meta"></figcaption></figure>
+	<figure class="card g3"><img src="img/works/生日寫真/Irene生日.jpg" alt="Irene生日"><figcaption class="meta"></figcaption></figure>
+  </div>
+</section>
+
+<section id="Studio_shot">
+  <h2 class="section-title">棚拍寫真</h2>
+  <div class="grid">
+    <figure class="card g3"><img src="img/works/棚拍寫真/可可草莓.jpg" alt="可可草莓"><figcaption class="meta"></figcaption></figure>
+	<figure class="card g3"><img src="img/works/棚拍寫真/艾瑞斯泡泡.jpg" alt="艾瑞斯泡泡"><figcaption class="meta"></figcaption></figure>
+	<!--<figure class="card g3"><img src="img/works/棚拍寫真/Irene生日.jpg" alt=""><figcaption class="meta"></figcaption></figure>-->
+  </div>
+</section>
+
+<section id="light_wedding_dress" >
+  <h2 class="section-title wedding">輕婚紗寫真</h2>
+  <div class="grid">
+    <figure class="card g3"><img src="img/works/輕婚紗寫真/點點婚紗.jpg" alt="點點婚紗"><figcaption class="meta"></figcaption></figure>
+	<figure class="card g3"><img src="img/works/輕婚紗寫真/坦芸婚紗.jpg" alt="坦芸婚紗"><figcaption class="meta"></figcaption></figure>
+	<!--<figure class="card g3"><img src="img/works/輕婚紗寫真/Irene生日.jpg" alt=""><figcaption class="meta"></figcaption></figure>-->
+  </div>
+</section>
+
+<footer>© <span id="y"></span> Jennifer • All rights reserved.</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // 手機選單
+  const burger = document.getElementById('burger');
+  const mobile = document.getElementById('mobile');
+  burger?.addEventListener('click',()=>{
+    const open = mobile.style.display === 'block';
+    mobile.style.display = open ? 'none' : 'block';
+    // 新增：同步更新 aria-expanded（可及性）
+    burger.setAttribute('aria-expanded', String(!open));
+  });
+  document.querySelectorAll('#mobile a').forEach(a=>
+    a.addEventListener('click',()=>{ mobile.style.display='none'; })
+  );
+
+  document.querySelectorAll('#mobile a').forEach(a=>a.addEventListener('click',()=>{mobile.style.display='none';}));
+
+  // 自動高亮
+  (function autoActive(){
+    const current = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    document.querySelectorAll('.links a, .mobile a').forEach(a=>{
+      const href = a.getAttribute('href'); if(!href) return;
+      try{
+        const url = new URL(href, window.location.origin);
+        if(url.hash) return;
+        const page = (url.pathname.split('/').pop() || 'index.html').toLowerCase();
+        if(page === current){ a.classList.add('active'); }
+      }catch(e){}
+    });
+  })();
+  
+  // ===== 分類膠囊：點擊 / 捲動 自動高亮 =====
+  const catLinks  = document.querySelectorAll('.category-nav .cat, .side-nav .cat');
+  const sections  = Array.from(document.querySelectorAll('section[id]'));
+  const OFFSET    = 140;          // 導覽 + 分類列高度（需要可微調）
+  let   lock      = false;        // 點擊後短暫鎖定，避免被捲動覆蓋
+  const LOCK_MS   = 700;
+
+  function setActiveById(id){
+    catLinks.forEach(a => a.classList.toggle('active-cat', a.getAttribute('href') === '#'+id));
+  }
+
+  // 點擊：先高亮並上鎖（配合 smooth scroll）
+  catLinks.forEach(a=>{
+    a.addEventListener('click', ()=>{
+      const id = a.getAttribute('href').slice(1);
+      setActiveById(id);
+      lock = true; setTimeout(()=> lock = false, LOCK_MS);
+    });
+  });
+
+  // 捲動：依「視窗頂 + 偏移量」判斷目前區塊
+	function updateActiveByScroll(){
+	  if (lock) return;
+
+	  // ✅ 到頁尾時，直接亮最後一個分類並結束
+	  const nearBottom =
+		window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8; // 容錯 -8px
+	  if (nearBottom) {
+		setActiveById(sections[sections.length - 1].id);
+		return;
+	  }
+
+	  // 其餘時段：依視窗頂 + OFFSET 判斷目前區塊
+	  const y = window.scrollY + OFFSET + 1; // +1 讓邊界更穩定
+	  let current = sections[0]?.id;
+	  for (const sec of sections){
+		const top = sec.offsetTop, bottom = top + sec.offsetHeight;
+		if (y >= top && y < bottom){ current = sec.id; break; }
+	  }
+	  if (current) setActiveById(current);
+	}
+  window.addEventListener('scroll', updateActiveByScroll, {passive:true});
+  window.addEventListener('load', ()=>{
+    if (location.hash) setActiveById(location.hash.slice(1)); // 直接連到 #birthday 時
+    updateActiveByScroll();
+  });
+</script>
+</body>
+</html>
