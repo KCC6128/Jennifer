@@ -69,29 +69,46 @@
       .mobile{display:none; position:absolute; top:56px; right:20px; background:#0f1219; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:var(--shadow)}
       .mobile a{display:block; padding:10px 12px}
     }
+
+	.nav { padding-top: max(14px, env(safe-area-inset-top)); }
+	section[id] { scroll-margin-top: 90px; }
+	@media (max-width:980px){ section[id]{ scroll-margin-top: 110px; } }
+	button, .btn, .links a { min-height: 44px; }
+
   </style>
 </head>
 <body>
-  <!-- Nav -->
-  <header class="nav">
-	  <div class="nav-inner">
-		<a href="index.html#top" class="brand"><span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span></a>
-		<nav class="links">
-		  <a href="index.html#about">關於</a>
-		  <a href="index.html#services">服務</a>
-		  <a href="works.html">作品</a>
-		  <a href="rental.html">服裝租借</a>
-		  <a href="index.html#contact" class="cta">預約</a>
-		</nav>
-		<div class="mobile" id="mobile">
-		  <a href="index.html#about">關於</a>
-		  <a href="index.html#services">服務</a>
-		  <a href="works.html">作品</a>
-		  <a href="rental.html">服裝租借</a>
-		  <a href="index.html#contact">預約</a>
-		</div>
-	  </div>
-  </header>
+
+<!-- Nav -->
+<header class="nav">
+  <div class="nav-inner">
+    <!-- 左側品牌 -->
+    <a href="index.html#top" class="brand">
+      <span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span>
+    </a>
+
+    <!-- 手機版漢堡選單按鈕：放在品牌後、桌機選單前 -->
+    <button id="burger" class="burger" aria-label="開啟選單" aria-expanded="false">☰</button>
+
+    <!-- 桌機版選單 -->
+    <nav class="links">
+      <a href="index.html#about">關於</a>
+      <a href="index.html#services">服務</a>
+      <a href="works.html">作品</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="index.html#contact" class="cta">預約</a>
+    </nav>
+
+    <!-- 手機版下拉選單容器 -->
+    <div class="mobile" id="mobile">
+      <a href="index.html#about">關於</a>
+      <a href="index.html#services">服務</a>
+      <a href="works.html">作品</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="index.html#contact">預約</a>
+    </div>
+  </div>
+</header>
 
   <!-- Hero -->
   <section class="hero">
