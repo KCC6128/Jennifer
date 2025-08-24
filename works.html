@@ -149,28 +149,44 @@
       .mobile a{display:block;padding:10px 12px}
 	  .side-nav{ display:none; }
     }
+
+	/* iOS 瀏海安全區 */
+	.nav { padding-top: max(14px, env(safe-area-inset-top)); }
+	/* 觸控目標更好點 */
+	button, .btn, .links a { min-height: 44px; }
   </style>
 </head>
 <body>
-  <header class="nav">
-	  <div class="nav-inner">
-		<a href="index.html#top" class="brand"><span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span></a>
-		<nav class="links">
-		  <a href="index.html#about">關於</a>
-		  <a href="index.html#services">服務</a>
-		  <a href="works.html">作品</a>
-		  <a href="rental.html">服裝租借</a>
-		  <a href="index.html#contact" class="cta">預約</a>
-		</nav>
-		<div class="mobile" id="mobile">
-		  <a href="index.html#about">關於</a>
-		  <a href="index.html#services">服務</a>
-		  <a href="works.html">作品</a>
-		  <a href="rental.html">服裝租借</a>
-		  <a href="index.html#contact">預約</a>
-		</div>
-	  </div>
-  </header>
+
+<header class="nav">
+  <div class="nav-inner">
+    <!-- 左側品牌 -->
+    <a href="index.html#top" class="brand">
+      <span class="dot"></span> Jennifer<span style="opacity:.55">/ photography</span>
+    </a>
+
+    <!-- 手機版漢堡選單按鈕：放在品牌後、桌機選單前 -->
+    <button id="burger" class="burger" aria-label="開啟選單" aria-expanded="false">☰</button>
+
+    <!-- 桌機版選單 -->
+    <nav class="links">
+      <a href="index.html#about">關於</a>
+      <a href="index.html#services">服務</a>
+      <a href="works.html">作品</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="index.html#contact" class="cta">預約</a>
+    </nav>
+
+    <!-- 手機版下拉選單容器 -->
+    <div class="mobile" id="mobile">
+      <a href="index.html#about">關於</a>
+      <a href="index.html#services">服務</a>
+      <a href="works.html">作品</a>
+      <a href="rental.html">服裝租借</a>
+      <a href="index.html#contact">預約</a>
+    </div>
+  </div>
+</header>
   
 <aside class="side-nav" aria-label="快速分類導覽">
   <a class="cat" href="#japan">日系寫真</a>
@@ -244,8 +260,18 @@
   document.getElementById('y').textContent = new Date().getFullYear();
 
   // 手機選單
-  const burger = document.getElementById('burger'); const mobile = document.getElementById('mobile');
-  burger?.addEventListener('click',()=>{const open=mobile.style.display==='block';mobile.style.display=open?'none':'block';});
+  const burger = document.getElementById('burger');
+  const mobile = document.getElementById('mobile');
+  burger?.addEventListener('click',()=>{
+    const open = mobile.style.display === 'block';
+    mobile.style.display = open ? 'none' : 'block';
+    // 新增：同步更新 aria-expanded（可及性）
+    burger.setAttribute('aria-expanded', String(!open));
+  });
+  document.querySelectorAll('#mobile a').forEach(a=>
+    a.addEventListener('click',()=>{ mobile.style.display='none'; })
+  );
+
   document.querySelectorAll('#mobile a').forEach(a=>a.addEventListener('click',()=>{mobile.style.display='none';}));
 
   // 自動高亮
