@@ -126,7 +126,11 @@
 	
 	/* 只有 JS 啟動才做進場淡入，避免圖片「不見」 */
 	.js .card { opacity: 0; transform: translateY(12px); will-change: transform, opacity; }
-	.js .card.in { opacity: 1; transform: translateY(0); }
+	.js .card.in { opacity: 1; }
+	/* 讓 slide 版位移不被覆蓋（一定要放在 .js .card 之後） */
+	.js .card.slide{
+	  transform: translateY(12px) translateX(var(--dx, 0));
+	}
 
 	/* 手機/平板：滑到卡片就微放大 */
 	@media (hover: none) {
@@ -137,6 +141,23 @@
 	/* 動效無障礙（可保留你原本的 reduce 也行） */
 	@media (prefers-reduced-motion: reduce) {
 	  .card { opacity: 1 !important; transform: none !important; }
+	}
+	/* --- Slide-in：最終統一版（放在樣式最末端） --- */
+
+	/* 進場淡入只負責透明度，不要重設 transform */
+	.card.in { opacity: 1; }
+
+	/* 初始：同時有 Y 位移和左右位移（--dx 由 JS 設定） */
+	.js .card.slide{
+	  opacity: 0;
+	  transform: translateY(12px) translateX(var(--dx, 0));
+	  transition: transform .6s ease, opacity .6s ease;
+	}
+
+	/* 進場後：回到原位（這條一定要在 .slide 後面，才會覆蓋） */
+	.js .card.slide.show{
+	  opacity: 1;
+	  transform: translateY(0) translateX(0);
 	}
 
   </style>
@@ -325,8 +346,12 @@
     const slideIO = new IntersectionObserver(es => {
       es.forEach(e => {
         if (e.isIntersecting) {
-          e.target.classList.add('show');
-          slideIO.unobserve(e.target);
+		  requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+			  e.target.classList.add('show');
+			  slideIO.unobserve(e.target);
+			});
+		  });
         }
       });
     }, { threshold:0.15, rootMargin:'0px 0px -10% 0px' });
