@@ -225,6 +225,18 @@
     .lead{ font-size:16px }
   }
 
+	/* === 首頁圖片滑入：交錯方向（右→左→右…） === */
+	.js .slide-in{
+	  opacity: 0;
+	  transform: translateY(12px) translateX(var(--dx, 0));
+	  transition: transform .6s ease, opacity .6s ease;
+	  will-change: transform, opacity;
+	}
+	.js .slide-in.show{
+	  opacity: 1;
+	  transform: translateY(0) translateX(0);
+	}
+
 </style>
 
 </head>
@@ -343,7 +355,7 @@
   // 讓 .js 前綴動畫可用
   document.documentElement.classList.add('js');
 
-  // ★ 首屏關鍵圖（優先載入）：優先找 .hero 圖，再退而求其次找第一張卡片圖
+  // ★ 首屏關鍵圖（優先載入）：先找 .hero 圖，再退而求其次找第一張卡片圖
   const firstAboveFold = document.querySelector('.hero img, .grid .card img, .cards .card img');
   if (firstAboveFold) {
     firstAboveFold.setAttribute('loading','eager');
@@ -385,6 +397,35 @@
     }, {rootMargin:'0px 0px -10% 0px', threshold:0.1});
     cards.forEach(c => io.observe(c));
   }
+
+  // === 首頁圖片交錯滑入（第1張由右→左交替） ===
+  // 目標：Hero 圖 + 各 section 裡的內容圖；避免選到 lightbox 用圖（若有）
+  const slideImgs = [
+    ...document.querySelectorAll('.hero img, section img:not(#lightImg)')
+  ];
+
+  // 設定初始偏移（i=0 從右側 +60px，i=1 從左側 -60px，依此交替）
+  slideImgs.forEach((img, i) => {
+    img.classList.add('slide-in');               // 需要對應 CSS
+    img.style.setProperty('--dx', i % 2 === 0 ? '60px' : '-60px');
+    img.setAttribute('decoding','async');        // 加速解碼
+  });
+
+  // 進到視窗時加上 .show（double rAF 確保有動畫）
+  const slideIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            e.target.classList.add('show');
+            slideIO.unobserve(e.target);
+          });
+        });
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+
+  slideImgs.forEach(img => slideIO.observe(img));
 
   // ★ 其餘圖片改為 lazy（跳過 .hero）
   document.querySelectorAll('img:not([loading])').forEach(img => {
