@@ -236,6 +236,12 @@
 	  opacity: 1;
 	  transform: translateY(0) translateX(0);
 	}
+	
+	/* iOS 也吃得到背後模糊（如果你有用） */
+	.nav { -webkit-backdrop-filter: saturate(180%) blur(10px); backdrop-filter: saturate(180%) blur(10px); }
+
+	/* 滑入/淡入元素：強制建立合成層，避免 iOS 掉幀 */
+	.card.slide, .slide-in { transform: translateZ(0) translateY(12px) translateX(var(--dx,0)); }
 
 </style>
 

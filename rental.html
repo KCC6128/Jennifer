@@ -159,6 +159,12 @@
 	  opacity: 1;
 	  transform: translateY(0) translateX(0);
 	}
+	
+	/* iOS 也吃得到背後模糊（如果你有用） */
+	.nav { -webkit-backdrop-filter: saturate(180%) blur(10px); backdrop-filter: saturate(180%) blur(10px); }
+
+	/* 滑入/淡入元素：強制建立合成層，避免 iOS 掉幀 */
+	.card.slide, .slide-in { transform: translateZ(0) translateY(12px) translateX(var(--dx,0)); }
 
   </style>
 </head>
@@ -343,18 +349,18 @@
     });
 
     // 進到視窗就顯示（觸發一次後就取消觀察）
-    const slideIO = new IntersectionObserver(es => {
-      es.forEach(e => {
-        if (e.isIntersecting) {
+	const slideIO = new IntersectionObserver(entries => {
+	  entries.forEach(e => {
+		if (e.isIntersecting) {
 		  requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 			  e.target.classList.add('show');
 			  slideIO.unobserve(e.target);
 			});
 		  });
-        }
-      });
-    }, { threshold:0.15, rootMargin:'0px 0px -10% 0px' });
+		}
+	  });
+	}, { threshold: 0.15, rootMargin: '0px 0px -15% 0px' }); // ← rootMargin 往下多留一點
     cards.forEach(c => slideIO.observe(c));
   }
 

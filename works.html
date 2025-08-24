@@ -216,6 +216,13 @@
     * { transition: none !important; scroll-behavior: auto !important; }
     .card { opacity: 1 !important; transform: none !important; }
   }
+
+  /* iOS 也吃得到背後模糊（如果你有用） */
+	.nav { -webkit-backdrop-filter: saturate(180%) blur(10px); backdrop-filter: saturate(180%) blur(10px); }
+
+  /* 滑入/淡入元素：強制建立合成層，避免 iOS 掉幀 */
+	.card.slide, .slide-in { transform: translateZ(0) translateY(12px) translateX(var(--dx,0)); }
+
 </style>
 
 
@@ -366,12 +373,18 @@
     }, {rootMargin:'0px 0px -10% 0px', threshold:0.1});
     cards.forEach(c => inIO.observe(c));
 
-    const zoomIO = new IntersectionObserver(es => {
-      es.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('peek');
-        else e.target.classList.remove('peek');
-      });
-    }, {threshold:0.6});
+	const slideIO = new IntersectionObserver(entries => {
+	  entries.forEach(e => {
+		if (e.isIntersecting) {
+		  requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+			  e.target.classList.add('show');
+			  slideIO.unobserve(e.target);
+			});
+		  });
+		}
+	  });
+	}, { threshold: 0.15, rootMargin: '0px 0px -15% 0px' }); // ← rootMargin 往下多留一點
     cards.forEach(c => zoomIO.observe(c));
 
     cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
