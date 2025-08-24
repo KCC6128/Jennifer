@@ -77,7 +77,19 @@
 
 	/* 讓兩顆按鈕排在一起有間距（可選） */
 	.hero-cta{ display:flex; gap:14px; flex-wrap:wrap; }
-
+	
+	/* === 卡片滑入動畫（左右交錯） === */
+	.card.slide{
+	  opacity: 0;
+	  /* 先往左右偏一點，再加上你原本的下移 12px */
+	  transform: translateY(12px) translateX(var(--dx, 0));
+	  transition: transform .6s ease, opacity .6s ease;
+	  will-change: transform, opacity;
+	}
+	.card.slide.show{
+	  opacity: 1;
+	  transform: translateY(0) translateX(0);
+	}
 
     @media (max-width: 980px){
       .hero{grid-template-columns:1fr}
@@ -88,6 +100,7 @@
       .burger{display:block; cursor:pointer}
       .mobile{display:none; position:absolute; top:56px; right:20px; background:#0f1219; border:1px solid var(--border); border-radius:12px; padding:10px; box-shadow:var(--shadow)}
       .mobile a{display:block; padding:10px 12px}
+	  .card.slide{ transition-duration: .5s; }
     }
 
 	.nav { padding-top: max(14px, env(safe-area-inset-top)); }
@@ -280,23 +293,44 @@
     if (page === currentPage) a.classList.add('active');
   });
 
-  // 卡片：進場淡入 + 滑到微放大 + 點擊 reveal
+  // 卡片：進場淡入 + 滑到微放大 + 點擊 reveal + 交錯滑入
   const cards = document.querySelectorAll('.card');
   if (cards.length) {
+    // 淡入
     const inIO = new IntersectionObserver(es => {
       es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, {rootMargin:'0px 0px -10% 0px', threshold:0.1});
+    }, { rootMargin:'0px 0px -10% 0px', threshold:0.1 });
     cards.forEach(c => inIO.observe(c));
 
+    // 微放大
     const zoomIO = new IntersectionObserver(es => {
       es.forEach(e => {
         if (e.isIntersecting) e.target.classList.add('peek');
         else e.target.classList.remove('peek');
       });
-    }, {threshold:0.6});
+    }, { threshold:0.6 });
     cards.forEach(c => zoomIO.observe(c));
 
+    // 點擊 reveal
     cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
+
+    // ★ 新增：左右交錯滑入（需要 CSS: .card.slide / .card.slide.show）
+    // 先加初始 class，並用 CSS 變數控制左右偏移量
+    cards.forEach((c, i) => {
+      c.classList.add('slide');
+      c.style.setProperty('--dx', i % 2 === 0 ? '-40px' : '40px'); // 偶數往左、奇數往右
+    });
+
+    // 進到視窗就顯示（觸發一次後就取消觀察）
+    const slideIO = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          slideIO.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.15, rootMargin:'0px 0px -10% 0px' });
+    cards.forEach(c => slideIO.observe(c));
   }
 
   // 其餘圖片 lazy（跳過 .hero）
@@ -305,6 +339,7 @@
   });
 })();
 </script>
+
 
 </body>
 </html>
