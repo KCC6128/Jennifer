@@ -365,28 +365,25 @@
     if (page === currentPage) a.classList.add('active');
   });
 
-  // 卡片：進場淡入 + 滑到微放大 + 點擊 reveal
+  // 卡片：進場淡入 + 滑到微放大 + 點擊 reveal + 交錯滑入
   const cards = document.querySelectorAll('.card');
   if (cards.length) {
+    // 淡入
     const inIO = new IntersectionObserver(es => {
       es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, {rootMargin:'0px 0px -10% 0px', threshold:0.1});
+    }, { rootMargin:'0px 0px -10% 0px', threshold:0.1 });
     cards.forEach(c => inIO.observe(c));
 
-	const slideIO = new IntersectionObserver(entries => {
-	  entries.forEach(e => {
-		if (e.isIntersecting) {
-		  requestAnimationFrame(() => {
-			requestAnimationFrame(() => {
-			  e.target.classList.add('show');
-			  slideIO.unobserve(e.target);
-			});
-		  });
-		}
-	  });
-	}, { threshold: 0.15, rootMargin: '0px 0px -15% 0px' }); // ← rootMargin 往下多留一點
+    // 微放大（peek）
+    const zoomIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('peek');
+        else e.target.classList.remove('peek');
+      });
+    }, { threshold: 0.6 });
     cards.forEach(c => zoomIO.observe(c));
 
+    // 點擊 reveal（若不需要可刪）
     cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('reveal')));
   }
 
@@ -419,7 +416,7 @@
     window.addEventListener('scroll', () => {
       const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
       if (nearBottom) setActiveById(sections[sections.length - 1].id);
-    });
+    }, { passive: true });
   }
 
   // 其餘圖片 lazy（作品頁沒有 hero，也 OK）
