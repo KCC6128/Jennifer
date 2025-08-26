@@ -351,6 +351,15 @@
 
       // 進度滿格
       barEl.style.width = '100%';
+
+	// 延遲一點再捲動，確保高度已經渲染完成
+	setTimeout(() => {
+	  document.querySelector('.result').scrollIntoView({
+		behavior: 'smooth',
+		block: 'start'
+	  });
+	}, 300); // 0.3 秒延遲，可依實測調整
+
     }
 
     function announce(msg){
