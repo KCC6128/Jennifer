@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>寫真風格小占卜</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f1115;
+      --card: #161a22;
+      --muted: #9aa3af;
+      --text: #e8eaed;
+      --brand: #f78da7;   /* 主色：清新粉 */
+      --brand-2: #a8e6cf; /* 補色：薄荷綠 */
+      --ring: 0 0 0 3px rgba(247,141,167,.25);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:linear-gradient(180deg,#0b0c10,#0f1115 30%,#121520 100%);
+      font-family:"Noto Sans TC",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+      color:var(--text); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    .wrap{max-width:960px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 12px}
+    h1{font-size:clamp(22px,4vw,32px);margin:0;font-weight:900;letter-spacing:.3px}
+    .sub{color:var(--muted);margin:4px 0 0;font-size:clamp(13px,2.2vw,15px)}
+
+    .shell{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+    @media (max-width: 860px){.shell{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
+      box-shadow:0 8px 30px rgba(0,0,0,.35)}
+
+    .panel{padding:18px}
+
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .steps{font-size:13px;color:var(--muted)}
+
+    .progress{height:10px;background:#0e131a;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand-2));transition:width .35s ease}
+
+    .q-title{font-weight:800;margin:12px 0 8px;font-size:clamp(18px,3.6vw,22px)}
+
+    .opts{display:grid;gap:10px}
+    @media (min-width:720px){.opts{grid-template-columns:1fr 1fr}}
+
+    .opt{position:relative;border:1px solid rgba(255,255,255,.08);background:#121622;border-radius:14px;padding:14px;cursor:pointer;
+      transition:transform .15s ease,border-color .15s ease,background .15s ease}
+    .opt:hover{transform:translateY(-1px);}
+    .opt input{position:absolute;opacity:0;pointer-events:none}
+    .opt .text{font-size:16px;line-height:1.5}
+    .opt:has(input:checked){border-color:var(--brand);background:#151b27;box-shadow:var(--ring)}
+
+    .actions{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.1);padding:12px 16px;border-radius:12px;color:var(--text);background:#121622;cursor:pointer;font-weight:700}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b0c10;border:none}
+    .btn[disabled]{opacity:.5;cursor:not-allowed}
+
+    /* 右側結果卡 */
+    .result{padding:18px;display:grid;gap:12px}
+    .hid{display:none}
+    .style-badge{display:inline-flex;align-items:center;gap:8px;background:#141a24;border:1px solid rgba(255,255,255,.06);
+      color:#ffd6de;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800}
+    .desc{color:#d7d9df}
+    .imgbox{position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+    .imgbox img{width:100%;height:auto;display:block}
+    .imgbox .cap{position:absolute;inset:auto 10px 10px 10px;color:#0b0c10;background:rgba(255,255,255,.9);
+      border-radius:999px;padding:6px 10px;font-size:12px;font-weight:800}
+
+    .hint{font-size:12px;color:var(--muted)}
+
+    /* 進場動畫 */
+    .fade-up{animation:fadeUp .35s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+    /* 可存取性 */
+    .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>🎥 寫真風格小占卜</h1>
+        <p class="sub">回答 8 題，找到最適合你的寫真風格。</p>
+      </div>
+    </header>
+
+    <div class="shell">
+      <!-- 左：問答卡 -->
+      <section class="card panel" aria-labelledby="quiz-heading">
+        <h2 id="quiz-heading" class="sr">占卜問題</h2>
+        <div class="meta">
+          <div class="steps"><span id="step">第 1 題</span>／共 8 題</div>
+          <div class="steps" id="sel-hint">請先選擇一個選項</div>
+        </div>
+        <div class="progress" aria-hidden="true"><div id="bar" class="bar" style="width:0%"></div></div>
+
+        <h3 id="q" class="q-title fade-up">問題</h3>
+        <div id="opts" class="opts fade-up" role="radiogroup" aria-describedby="q"></div>
+
+        <div class="actions">
+          <button id="prev" class="btn" disabled>← 上一題</button>
+          <div style="display:flex;gap:10px">
+            <!-- <button id="skip" class="btn" title="略過此題">略過</button> -->
+            <button id="next" class="btn primary">下一題 →</button>
+          </div>
+        </div>
+        <div id="live" class="sr" aria-live="polite"></div>
+      </section>
+
+      <!-- 右：結果卡 -->
+      <aside class="card result" aria-live="polite">
+        <div id="before" class="fade-up">
+          <span class="style-badge">💡 小提示</span>
+          <p class="desc">作答完成後，這裡會出現你的個人化結果：<b>建議寫真風格</b>、<b>風格小故事</b>與<b>作品連結</b>。</p>
+        </div>
+
+        <div id="after" class="hid fade-up">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <span class="style-badge" id="style-badge">📸 推薦風格</span>
+            <a id="more" class="btn" href="https://kcc6128.github.io/Jennifer/works.html" target="_blank" rel="noopener">查看更多作品</a>
+          </div>
+          <p id="story" class="desc" style="margin:6px 0 8px"></p>
+          <div class="imgbox">
+            <img id="img" alt="風格示例">
+            <span class="cap" id="cap">日系・柔光</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // ===== 問卷資料（承接你原本的題目與配分） =====
+	const quizData = [
+	  {
+		question: "在一座陌生的城市，你最容易被哪裡吸引？",
+		options: [
+		  { text: "濕潤的清晨小徑，霧氣輕飄", scores: { "日系寫真": 5, "輕婚紗寫真": 1 } },
+		  { text: "轉角的玻璃窗邊，兩人共享一杯飲料", scores: { "情侶寫真": 5, "日系寫真": 1 } },
+		  { text: "樓上傳來生日歌的公寓，笑聲從門縫溢出", scores: { "生日寫真": 5 } },
+		  { text: "屋頂上的綠意與風，視線很遠很乾淨", scores: { "輕婚紗寫真": 5, "情侶寫真": 1 } }
+		]
+	  },
+	  {
+		question: "哪種光，會讓你覺得『剛剛好』？",
+		options: [
+		  { text: "像雲層過濾過的晨光，顏色淡淡", scores: { "日系寫真": 5 } },
+		  { text: "傍晚斜斜落下，影子把兩個人連在一起", scores: { "情侶寫真": 4, "日系寫真": 1 } },
+		  { text: "室內小燈與蠟燭混合，空氣裡有甜味", scores: { "生日寫真": 5 } },
+		  { text: "乾淨均勻，像是把雜訊都關掉了", scores: { "輕婚紗寫真": 5 } }
+		]
+	  },
+	  {
+		question: "今天的節奏，最像哪一種？",
+		options: [
+		  { text: "慢慢走、慢慢看，給空白留位置", scores: { "日系寫真": 5 } },
+		  { text: "兩個人的步伐彼此對上拍", scores: { "情侶寫真": 5 } },
+		  { text: "一群人的笑點此起彼落", scores: { "生日寫真": 5 } },
+		  { text: "像序曲一樣有秩序，往後是故事的開始", scores: { "輕婚紗寫真": 5 } }
+		]
+	  },
+	  {
+		question: "如果照片有氣味，你會選哪一種？",
+		options: [
+		  { text: "雨後木頭與棉布的味道", scores: { "日系寫真": 5 } },
+		  { text: "白桃與小花束的輕甜", scores: { "情侶寫真": 4, "輕婚紗寫真": 1 } },
+		  { text: "奶油蛋糕與氣泡飲的歡愉", scores: { "生日寫真": 5 } },
+		  { text: "白茶與新頁紙張，很乾淨", scores: { "輕婚紗寫真": 5 } }
+		]
+	  },
+	  {
+		question: "你最自在的構圖是？",
+		options: [
+		  { text: "留白很多，主角像被空氣擁抱", scores: { "日系寫真": 5 } },
+		  { text: "視線在兩個人之間來回，像對話", scores: { "情侶寫真": 5 } },
+		  { text: "畫面裡有許多重複的小元素", scores: { "生日寫真": 5 } },
+		  { text: "對稱、俐落，重點很清楚", scores: { "輕婚紗寫真": 5 } }
+		]
+	  },
+	  {
+		question: "哪種顏色關係最貼近你？",
+		options: [
+		  { text: "低飽和的米白與灰綠，像霧面奶油", scores: { "日系寫真": 5 } },
+		  { text: "淡粉與暖棕，像約會後的晚霞", scores: { "情侶寫真": 4, "日系寫真": 1 } },
+		  { text: "柑橘與氣球色，隨時有人喊耶", scores: { "生日寫真": 5 } },
+		  { text: "純白與金色點綴，乾淨又有儀式感", scores: { "輕婚紗寫真": 5 } }
+		]
+	  },
+	  {
+		question: "鏡頭前，你通常會…",
+		options: [
+		  { text: "讓手自然地擺著，像走在風裡", scores: { "日系寫真": 5 } },
+		  { text: "靠近一點，笑點常常同步", scores: { "情侶寫真": 5 } },
+		  { text: "主動找梗，大家一起玩起來", scores: { "生日寫真": 5 } },
+		  { text: "站穩、轉身、深呼吸，像翻到新的章節", scores: { "輕婚紗寫真": 5 } }
+		]
+	  },
+	  {
+		question: "若把今天變成一首配樂…",
+		options: [
+		  { text: "木吉他與底噪，像被午後擁抱", scores: { "日系寫真": 5 } },
+		  { text: "雙人合聲，旋律互相依靠", scores: { "情侶寫真": 5 } },
+		  { text: "銅管與掌聲，節拍歡騰", scores: { "生日寫真": 5 } },
+		  { text: "弦樂序曲，莊重而明亮", scores: { "輕婚紗寫真": 5 } }
+		]
+	  }
+	];
+
+    // 風格資料（附範例圖連結；若檔案不存在會自動退回佈景色塊）
+	const styles = {
+	  "日系寫真": {
+		desc: "清新自然，捕捉生活中細膩的溫度。以柔和光影與低飽和色調，呈現出猶如電影片段般的溫暖故事。",
+		image: "img/works/日系寫真/貓咪浴衣.webp",
+		link: "https://kcc6128.github.io/Jennifer/works.html#japan",
+		cap: "日系・柔光"
+	  },
+	  "情侶寫真": {
+		desc: "紀錄你們之間真實的互動與笑容，用自然流露的情感寫下最動人的愛情篇章，留下專屬於你們的故事。",
+		image: "img/works/情侶寫真/CU情侶.webp",
+		link: "https://kcc6128.github.io/Jennifer/works.html#couple",
+		cap: "情侶・互動"
+	  },
+	  "生日寫真": {
+		desc: "專屬你的特別日，用蛋糕、氣球與滿滿的笑容點綴回憶。捕捉每個真摯的歡笑，讓生日時光化作永恆紀念。",
+		image: "img/works/生日寫真/坦芸生日.webp",
+		link: "https://kcc6128.github.io/Jennifer/works.html#birthday",
+		cap: "生日・派對"
+	  },
+	  "輕婚紗寫真": {
+		desc: "簡約卻充滿情感，用自然清新的方式詮釋愛與承諾。輕柔典雅，將屬於你們的婚紗故事凝結在最純粹的瞬間。",
+		image: "img/works/輕婚紗寫真/點點婚紗.webp",
+		link: "https://kcc6128.github.io/Jennifer/works.html#light_wedding_dress",
+		cap: "婚紗・優雅"
+	  }
+	};
+
+    let idx = 0; // 目前題目
+    const scores = {"日系寫真":0,"情侶寫真":0,"生日寫真":0,"輕婚紗寫真":0};
+    const chosen = new Array(quizData.length).fill(null);
+
+    // DOM
+    const qEl = document.getElementById('q');
+    const optsEl = document.getElementById('opts');
+    const stepEl = document.getElementById('step');
+    const barEl = document.getElementById('bar');
+    const liveEl = document.getElementById('live');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const skipBtn = document.getElementById('skip');
+
+    const beforeEl = document.getElementById('before');
+    const afterEl = document.getElementById('after');
+    const storyEl = document.getElementById('story');
+    const badgeEl = document.getElementById('style-badge');
+    const imgEl = document.getElementById('img');
+    const capEl = document.getElementById('cap');
+    const moreEl = document.getElementById('more');
+
+    const total = quizData.length;
+
+    // 初始
+    render();
+
+    prevBtn.addEventListener('click',()=>{ if(idx>0){ idx--; render(); } });
+    nextBtn.addEventListener('click', onNext);
+    skipBtn.addEventListener('click', ()=>{ chosen[idx] = null; onNext(); });
+
+    function onNext(){
+      if(chosen[idx] == null){
+        announce('請先選擇一個選項');
+        bump();
+        return;
+      }
+      if(idx < total-1){ idx++; render(); }
+      else { finish(); }
+    }
+
+    function render(){
+      // 標題 / 步驟
+      stepEl.textContent = `第 ${idx+1} 題`;
+      const progress = Math.round((idx)/total*100);
+      barEl.style.width = progress + '%';
+
+      const data = quizData[idx];
+      qEl.textContent = data.question;
+
+      // 選項
+      optsEl.innerHTML = '';
+      data.options.forEach((opt, i)=>{
+        const id = `q${idx}_o${i}`;
+        const label = document.createElement('label');
+        label.className = 'opt fade-up';
+        label.setAttribute('for', id);
+        label.innerHTML = `
+          <input id="${id}" type="radio" name="q${idx}" ${chosen[idx]===i?'checked':''} />
+          <div class="text">${opt.text}</div>
+        `;
+        label.addEventListener('click',()=>{
+          chosen[idx] = i;
+          if(window.navigator?.vibrate) navigator.vibrate(8);
+          announce(`已選擇：${opt.text}`);
+        });
+        optsEl.appendChild(label);
+      });
+
+      prevBtn.disabled = idx===0;
+      nextBtn.textContent = idx===total-1 ? '看結果 →' : '下一題 →';
+    }
+
+    function finish(){
+      // 清分數
+      for(const k in scores) scores[k]=0;
+      chosen.forEach((choice, qIdx)=>{
+        if(choice==null) return; // 略過不加分
+        const opt = quizData[qIdx].options[choice];
+        for(const style in opt.scores){ scores[style] += opt.scores[style]; }
+      });
+      const winner = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+      const info = styles[winner];
+
+      // 產生一段「品牌語氣」的小故事（前端本地版示例；之後可改為後端 AI）
+      const flavor = [
+        '像微風拂過的午後，光落在你最自然的笑容上。',
+        '把故事留在光影之間，溫柔且剛好。',
+        '在不經意的瞬間，找到屬於你的光和色。'
+      ];
+      const line = flavor[(Math.random()*flavor.length)|0];
+      storyEl.textContent = `${info.desc} ${line}`;
+
+      badgeEl.textContent = `📸 推薦風格｜${winner}`;
+      moreEl.href = info.link;
+      capEl.textContent = info.cap || winner;
+
+      imgEl.src = info.image;
+      imgEl.onerror = ()=>{
+        // 如果站上沒有這張圖，做一個簡單漸層佔位
+        const ph = genPlaceholder(winner);
+        imgEl.src = ph;
+      };
+
+      // 顯示結果區
+      beforeEl.classList.add('hid');
+      afterEl.classList.remove('hid');
+
+      // 進度滿格
+      barEl.style.width = '100%';
+    }
+
+    function announce(msg){
+      liveEl.textContent = msg;
+    }
+
+    function bump(){
+      // 小抖動提示
+      optsEl.style.transform = 'translateY(-1px)';
+      setTimeout(()=>optsEl.style.transform='translateY(0)', 120);
+    }
+
+    function genPlaceholder(text){
+      const c = document.createElement('canvas');
+      c.width = 1200; c.height = 800;
+      const ctx = c.getContext('2d');
+      const g = ctx.createLinearGradient(0,0,c.width,c.height);
+      g.addColorStop(0,'#ffe1e9'); g.addColorStop(1,'#e0fff4');
+      ctx.fillStyle=g; ctx.fillRect(0,0,c.width,c.height);
+      ctx.fillStyle='#0f1115'; ctx.globalAlpha=.85;
+      ctx.font='bold 64px Noto Sans TC';
+      ctx.fillText(text, 60, 120);
+      ctx.globalAlpha=1;
+      return c.toDataURL('image/png');
+    }
+  </script>
+</body>
+</html>
